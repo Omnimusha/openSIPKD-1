@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<div metal:define-macro="nav">
+  <div metal:use-macro="view.main">
+    <div metal:fill-slot="navbar">
+      <div class="navbar navbar-inverse">
+        <div class="navbar-inner">
+            <ul class="nav">
+                <li class="active">
+                    <a href="#"><strong>PBB</strong></a>
+                </li>
+                <li class="dropdown ">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Pendataan <strong class="caret"></strong></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/pbbd/spop">SPOP</a></li>
+                        <li><a href="/pbbd/lspop">LSPOP</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown ">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Referensi <strong class="caret"></strong></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/pbb/ref/kecamatan/1">Kecamatan</a></li>
+                        <li><a href="/pbb/ref/kelurahan/1">Kelurahan/Desa</a></li>
+                    </ul>
+                </li>
+        </ul>
+          <div class="nav-collapse collapse"></div>
+        </div>
+      </div>
+      <div class="container-fluid">
+        <div id="msg_helper" class="alert alert-info"><button type="button"
+            class="close" data-dismiss="alert">&times;</button>${datas.message}</div>
+      </div>
+      
+    </div>
+  </div>  
+</div>

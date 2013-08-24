@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<div metal:use-macro="view.nav">
+
+    <div metal:fill-slot="content">
+      <div class="content">
+          <div class="container-fluid">
+          <ul class="nav nav-tabs">
+            <li class="active">
+              <a href="#"><strong>Kecamatan</strong></a>
+            </li>
+          </ul>
+<script>          
+$(document).ready(function () {
+  function set_value(data){
+      $("#kd_kecamatan").val(data['kd_kecamatan']);
+      $("#nm_kecamatan").val(data['nm_kecamatan']);
+      
+  }
+  
+  function readonly(){
+    if ($("#form_visible").val()==0){
+        $("#btn_save").attr('disabled', 'disabled');
+
+        $("#kd_kecamatan").removeAttr('readonly');
+        $("#nm_kecamatan").attr('readonly', 'readonly');
+  
+      }else{
+        $("#btn_save").removeAttr('disabled');
+
+        $("#kd_kecamatan").attr('readonly', 'readonly');
+        $("#nm_kecamatan").removeAttr('readonly');
+    }
+  }
+  readonly();
+
+  $("#kd_kecamatan").keypress(function () {
+    if ($("#form_visible").val()==0){
+
+      var kd_propinsi = $("#kd_propinsi").val();
+      var kd_dati2 = $("#kd_dati2").val();
+      var kd_kecamatan = $("#kd_kecamatan").val();
+
+      if (kd_kecamatan.length==3 && kd_kecamatan.length==3 ) {
+        if (isNaN($("#kd_kecamatan").val()))  {
+            alert('Isian Kode Harus Numeric');
+            return false;
+        }
+        
+        if ($("#form_visible").val()=='0') {
+          $.ajax({
+              url: '/pbb/ref/kecamatan/c/' + kd_kecamatan+kd_kecamatan,
+              success: function (json) {
+                  data = JSON.parse(json);
+
+                  if (data['found'] == 1) {
+                      var nopmsg = 'Kode kecamatan sudah digunakan, Edit?';
+                      if (confirm(nopmsg) == false) {
+                         return false;
+                      } else {
+                        set_value(data);
+                        $("#form_visible").val('1');
+                        readonly();
+                      };
+                  }else{
+                      var nopmsg = 'Dta tidak ada, tambah?';
+                      if (confirm(nopmsg) == false) {
+                         return false;
+                      } else {
+                        $("#form_visible").val('1');
+                        readonly();
+                      };
+                  };
+              },
+              error: function (xhr, desc, er) {
+                  alert(er);
+              }
+          });
+        }
+      }
+    }
+  });
+    
+  $("#btn_reset").click(function () {
+    $("#form_visible").val(0);
+    readonly();
+  })
+});
+</script>          
+<!--script src="${request.static_url('sipkd:static/js/pbb/ref_kecamatan.js')}" ></script-->
+<div class="content">
+
+  <div class="container-fluid">
+    <form class="form-horizontal" action='/pbb/ref/kecamatan/1' method='POST'>
+    <input id="form_visible" name="form_visible" type="hidden" value="${datas.form_visible}">
+    <div class="control-group">    
+      <label class="control-label">Kode</label> 
+      <div class="controls">
+        <input class="input-mini2" id="kd_propinsi" name="kd_propinsi" type="text" value="${datas.kd_propinsi}" readonly>
+        <input class="input-mini2" id="kd_dati2" name="kd_dati2" type="text" value="${datas.kd_dati2}" readonly>
+        <input class="input-mini3" id="kd_kecamatan" name="kd_kecamatan" value="${datas.kd_kecamatan}" maxlength="3" type="text" >
+      </div>
+    </div>
+
+    <div class="control-group">    
+      <label class="control-label">Nama</label> 
+      <div class="controls">  
+        <input class="input-large" id="nm_kecamatan" name="nm_kecamatan" type="text" maxlength="30" value="${datas.nm_kecamatan}">
+      </div>
+    </div>
+    
+    <input type="submit" class="btn btn-success" id="btn_save" name="btn_save" value="Proses"/>
+    <input type="reset" class="btn btn-warning" id="btn_reset" name="btn_reset" value="Batal"/>
+    </form>
+  </div>
+</div>         
+              
+ 
+        </div>
+      </div>
+    </div>
+</div>

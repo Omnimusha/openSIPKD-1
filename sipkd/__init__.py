@@ -34,13 +34,17 @@ def main(global_config, **settings):
     
     config.add_route('pbbpos', '/pbbpos')
     config.add_route('pbbm', '/pbbm')
-    config.add_route('pbbd', '/pbbd')
-    config.add_route('pbbdspop', '/pbbd/spop')
-    config.add_route('pbbdspopc1', '/pbbd/spop/c1/{t}/{f}')
-    config.add_route('pbbdspopc2', '/pbbd/spop/c2/{t}/{f}/{n1}/{n2}/{n3}')
-    config.add_route('pbbdlspop', '/pbbd/lspop')
-    config.add_route('pbbddsp', '/pbbd/dsp/{kode}')
+    config.add_route('pbb', '/pbb')
+    config.add_route('pbbspop', '/pbb/spop')
+    config.add_route('pbbspopc1', '/pbb/spop/c1/{t}/{f}')
+    config.add_route('pbbspopc2', '/pbb/spop/c2/{t}/{f}/{n1}/{n2}/{n3}')
+    config.add_route('pbblspop', '/pbb/lspop')
+    config.add_route('pbbdsp', '/pbb/dsp/{kode}')
     
+    config.add_route('pbb_ref_kelurahan', '/pbb/ref/kelurahan/{kode}')
+    config.add_route('pbb_ref_kelurahan_c', '/pbb/ref/kelurahan/c/{kode}')
+    config.add_route('pbb_ref_kecamatan', '/pbb/ref/kecamatan/{kode}')
+    config.add_route('pbb_ref_kecamatan_c', '/pbb/ref/kecamatan/c/{kode}')
     
     config.scan()
     return config.make_wsgi_app()

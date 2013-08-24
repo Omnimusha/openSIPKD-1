@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from sipkd.models.model import * 
 from sqlalchemy import and_
 from sipkd.models.pbb.pbb import osPbb
@@ -34,8 +36,36 @@ class osDOP(Base):
     tgl_perekaman_op = Column(DateTime)
     nip_perekam_op = Column(String(18))
    
-    def __init__(self):
-      pass
+    def __init__(self, data):
+        self.kd_propinsi=data['kd_propinsi'],
+        self.kd_dati2=data['kd_dati2'],
+        self.kd_kecamatan=data['kd_kecamatan'],
+        self.kd_kelurahan=data['kd_kelurahan'],
+        self.kd_blok=data['kd_blok'],
+        self.no_urut=data['no_urut'],
+        self.kd_jns_op=data['kd_jns_op'],
+        self.subjek_pajak_id=data['subjek_pajak_id'],
+        self.no_formulir_spop=data['no_formulir_spop'],
+        self.no_persil=data['no_persil'],
+        self.jalan_op=data['jalan_op'],
+        self.blok_kav_no_op=data['blok_kav_no_op'],
+        self.rw_op=data['rw_op'],
+        self.rt_op=data['rt_op'],
+        self.kd_status_cabang=data['kd_status_cabang'],
+        self.kd_status_wp=data['kd_status_wp'],
+        self.total_luas_bumi=data['total_luas_bumi'],
+        self.total_luas_bng=data['total_luas_bng'],
+        self.njop_bumi=data['njop_bumi'],
+        self.njop_bng=data['njop_bng'],
+        self.status_peta_op=data['status_peta_op'],
+        self.jns_transaksi_op=data['jns_transaksi_op'],
+        self.tgl_pendataan_op=datetime.strptime(data['tgl_pendataan_op'],'%d-%m-%Y'),
+        self.nip_pendata=data['nip_pendata'],
+        self.tgl_pemeriksaan_op=datetime.strptime(data['tgl_pemeriksaan_op'],'%d-%m-%Y'),
+        self.nip_pemeriksa_op=data['nip_pemeriksa_op'],
+        self.tgl_perekaman_op=datetime.now(),
+        self.nip_perekam_op=data['nip_perekam_op'],
+
       
     @classmethod
     def row2dict(cls,row):
@@ -75,72 +105,17 @@ class osDOP(Base):
         return DBSession.query(cls).filter( 
                 cls.no_formulir_spop==osPbb.frm_join(frm)
                 ).first()     
-                
+    
     @classmethod
-    def tambah(cls, datas):
-        data=cls(datas)
-        DBSession.add(kd_propinsi==datas.kd_propinsi ,
-            kd_dati2==datas.kd_dati2 ,
-            kd_kecamatan==datas.kd_kecamatan ,
-            kd_kelurahan==datas.kd_kelurahan ,
-            kd_blok==datas.kd_blok ,
-            no_urut==datas.no_urut ,
-            kd_jns_op==datas.kd_jns_op ,
-            subjek_pajak_id==datas.subjek_pajak_id ,
-            no_formulir_spop==datas.no_formulir_spop ,
-            no_persil==datas.no_persil ,
-            jalan_op==datas.jalan_op ,
-            blok_kav_no_op==datas.blok_kav_no_op ,
-            rw_op==datas.rw_op ,
-            rt_op==datas.rt_op ,
-            kd_status_cabang==datas.kd_status_cabang ,
-            kd_status_wp==datas.kd_status_wp ,
-            total_luas_bumi==datas.total_luas_bumi ,
-            total_luas_bng==datas.total_luas_bng ,
-            njop_bumi==datas.njop_bumi ,
-            njop_bng==datas.njop_bng ,
-            status_peta_op==datas.status_peta_op ,
-            jns_transaksi_op==datas.jns_transaksi_op ,
-            tgl_pendataan_op==datas.tgl_pendataan_op ,
-            nip_pendata==datas.nip_pendata ,
-            tgl_pemeriksaan_op==datas.tgl_pemeriksaan_op ,
-            nip_pemeriksa_op==datas.nip_pemeriksa_op ,
-            tgl_perekaman_op==datas.tgl_perekaman_op ,
-            nip_perekam_op==datas.nip_perekam_op)
+    def tambah(cls, data):
+        DBSession.add(cls(data))
             
     @classmethod
     def edit(cls, data):
-        DBsession.merge(kd_propinsi==datas.kd_propinsi ,
-            kd_dati2==datas.kd_dati2 ,
-            kd_kecamatan==datas.kd_kecamatan ,
-            kd_kelurahan==datas.kd_kelurahan ,
-            kd_blok==datas.kd_blok ,
-            no_urut==datas.no_urut ,
-            kd_jns_op==datas.kd_jns_op ,
-            subjek_pajak_id==datas.subjek_pajak_id ,
-            no_formulir_spop==datas.no_formulir_spop ,
-            no_persil==datas.no_persil ,
-            jalan_op==datas.jalan_op ,
-            blok_kav_no_op==datas.blok_kav_no_op ,
-            rw_op==datas.rw_op ,
-            rt_op==datas.rt_op ,
-            kd_status_cabang==datas.kd_status_cabang ,
-            kd_status_wp==datas.kd_status_wp ,
-            total_luas_bumi==datas.total_luas_bumi ,
-            total_luas_bng==datas.total_luas_bng ,
-            njop_bumi==datas.njop_bumi ,
-            njop_bng==datas.njop_bng ,
-            status_peta_op==datas.status_peta_op ,
-            jns_transaksi_op==datas.jns_transaksi_op ,
-            tgl_pendataan_op==datas.tgl_pendataan_op ,
-            nip_pendata==datas.nip_pendata ,
-            tgl_pemeriksaan_op==datas.tgl_pemeriksaan_op ,
-            nip_pemeriksa_op==datas.nip_pemeriksa_op ,
-            tgl_perekaman_op==datas.tgl_perekaman_op ,
-            nip_perekam_op==datas.nip_perekam_op)
+        DBSession.merge(osDOP(data))
             
     @classmethod
-    def hapus(cls,datas,nop):
+    def hapus(cls,nop):
         DBSession.query(cls).filter( and_(
                 cls.kd_propinsi==nop.kd_propinsi ,
                 cls.kd_dati2==nop.kd_dati2 ,
@@ -153,7 +128,10 @@ class osDOP(Base):
     
     @classmethod
     def frm_max(cls,kode):
-        frm=osPbb.frm_join(kode)
+        if kode:
+            frm=''.join((kode['tahun'],kode['bundle'],'%'))
+       
         return DBSession.query(
-                  func.max(cls.no_formulir_spop).label("frm_max")).filter(
-                      cls.no_formulir_spop.like(''.join((frm[0:7],'%')))).first()
+                    func.max(cls.no_formulir_spop).label("frm_max")
+                  ).filter(
+                      cls.no_formulir_spop.like(frm)).first() or Null

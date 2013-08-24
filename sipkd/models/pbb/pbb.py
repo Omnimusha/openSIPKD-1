@@ -1,3 +1,5 @@
+from types import *
+from datetime import datetime, date
 
 class osPbb(object):
     def __init__(self):
@@ -26,4 +28,7 @@ class osPbb(object):
     def frm_join(cls, kode):
         return ''.join((kode['tahun'],kode['bundle'],kode['no_urut']))
 
-   
+    @classmethod
+    def default(cls,o):
+        if type(o) is date:
+            return o.strftime("%d-%m-%Y")

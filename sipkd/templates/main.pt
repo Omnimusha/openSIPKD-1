@@ -3,7 +3,7 @@
   <div metal:use-macro="view.layout">
     <div metal:fill-slot="logged">
         <div class="btn-group pull-right">'
-          <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">${usernm}</a>
+          <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">${datas.usernm}</a>
           <ul class="dropdown-menu pull-right">
             <li><a href="#">Ubah Password</a></li>
             <li><a href="/logout">Logout</a></li>
@@ -14,7 +14,7 @@
     <div metal:fill-slot="apps">
         <form class="btn-group pull-right" >
           <select name="app_id" id="app_id" >
-            <option tal:repeat="opt opts" value="${opt.kode}">
+            <option tal:repeat="opt datas.opts" value="${opt.kode}">
                 ${opt.nama}
             </option>
           </select>

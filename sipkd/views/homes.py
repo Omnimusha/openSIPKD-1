@@ -7,8 +7,10 @@ from pyramid.security import remember
 from pyramid.security import forget
 from pyramid.security import has_permission
 from sqlalchemy import *
-from sipkd.models import *
 from sqlalchemy.exc import DBAPIError
+from sipkd.models import *
+from sipkd.views.views import *
+
 #from ..models import model  
 #from usersdb import USERS
 
@@ -45,10 +47,10 @@ class SipkdViews(object):
     @view_config(route_name='home',
                  renderer='../templates/home.pt')
     def home(self):
-        return dict(title='OpenSIPKD',
-                    message = 'Silahkan Login',
+        datas=sipkd_init(self.request)
+        return dict(message = 'Silahkan Login',
                     logout='',
-                    apps=''
+                    datas=datas
                     )
                     
     
@@ -81,9 +83,10 @@ class SipkdViews(object):
                 session['logged']=1
                 return HTTPFound(location='/main',
                                  headers=headers)
-            message = 'Login Gagal'
-        return dict(title="Login",
-                    message=message,)
+            datas['message'] = 'Login Gagal'
+            datas['title']="Login"
+                    
+        return datas
             
     @view_config(route_name="logout", renderer="../templates/home.pt")
     def logout(self):
@@ -95,20 +98,10 @@ class SipkdViews(object):
 
     @view_config(route_name="main", renderer="../templates/main.pt")
     def main(self):
-        from ..models.apps import osApps
         session = self.request.session
 
-        if session['logged']<>1:
-           return HTTPFound(location='/logout') 
-        opts=[dict(nama='ADMIN', kode='admin')]
-        if self.request.session['sa']==1:
-            opts = osApps.get_rows()
-            
-        else:
-            pass
-  
+        datas = sipkd_init(self.request)
         return dict(title="OpenSIPKD",
                     message="Login Berhasil",
                     usernm=self.request.session['usernm'], 
-                    opts=opts)
-
+                    datas=datas or null)

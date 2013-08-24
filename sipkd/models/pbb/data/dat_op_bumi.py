@@ -18,8 +18,20 @@ class osDOPBumi(Base):
     nilai_sistem_bumi = Column(Float)
 
     
-    def __init__(self):
-      pass
+    def __init__(self, data):
+        self.kd_propinsi=data['kd_propinsi'],
+        self.kd_dati2=data['kd_dati2'],
+        self.kd_kecamatan=data['kd_kecamatan'],
+        self.kd_kelurahan=data['kd_kelurahan'],
+        self.kd_blok=data['kd_blok'],
+        self.no_urut=data['no_urut'],
+        self.kd_jns_op=data['kd_jns_op'],
+        self.no_bumi=data['no_bumi'] or 1,
+        self.kd_znt=data['kd_znt'] or 'AA',
+        self.luas_bumi=data['luas_bumi'] or 0,
+        self.jns_bumi=data['jns_bumi'] or 0,
+        self.nilai_sistem_bumi=data['nilai_sistem_bumi'] or 0,
+      
       
     @classmethod
     def row2dict(cls,row):
@@ -61,16 +73,24 @@ class osDOPBumi(Base):
                 ).first()     
                 
     @classmethod
-    def tambah(cls, datas):
-        data=cls(datas)
-        DBSession.add()
+    def tambah(cls, data):
+        DBSession.add(cls(data))
             
     @classmethod
     def edit(cls, data):
-        DBsession.merge()
+        DBSession.merge(cls(data))
             
     @classmethod
-    def hapus(cls,datas,nop):
-        DBSession.query(cls).filter( and_()
-                ).delete()
+    def hapus(cls,data):
+        DBSession.query(cls).filter( and_(
+        cls.kd_propinsi==data.kd_propinsi,
+        cls.kd_propinsi==data['kd_propinsi'],
+        cls.kd_dati2==data['kd_dati2'],
+        cls.kd_kecamatan==data['kd_kecamatan'],
+        cls.kd_kelurahan==data['kd_kelurahan'],
+        cls.kd_blok==data['kd_blok'],
+        cls.no_urut==data['no_urut'],
+        cls.kd_jns_op==data['kd_jns_op'],
+        cls.no_bumi==data['no_bumi'],
+        )).delete()
 

@@ -11,7 +11,8 @@ from sqlalchemy import (
     Table,
     Float,
     BigInteger,
-    Numeric
+    Numeric,
+    Date
     )
 
 from sqlalchemy.ext.declarative import declarative_base
@@ -28,6 +29,7 @@ Base = declarative_base()
 
 gkd_propinsi = '32'
 gkd_dati2 = '79'
+
 
 def to_json(inst, cls):
     

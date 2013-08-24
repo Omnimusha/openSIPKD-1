@@ -8,6 +8,24 @@ from ..models.model import (
     #osApp,
     )
 
+from sipkd.models.apps import osApps
+
+def sipkd_init(request):
+    datas={}
+    if 'logged' in request.session:
+        print 'username', request.session['usernm']
+        datas['usernm']=request.session['usernm'], 
+        if request.session['sa']==1:
+            datas['opts']=osApps.get_rows()
+            opts = osApps.get_rows()
+        else:
+            opts = ()
+    else:
+        datas['usernm']=''
+    datas['title']="OpenSIPKD"
+    datas['message']="Silahkan Isi Form di bawah ini"
+    
+    return datas
 
 @view_config(route_name='home1', renderer='../templates/mytemplate.pt')
 def my_view(request):

@@ -13,9 +13,10 @@ from sqlalchemy.exc import DBAPIError
 import json
 import types
 from sipkd.models.apps import osApps
+from sipkd.views.views import *
 from data.spops import osSpop
 
-class PbbdViews(object):
+class PbbViews(object):
     def __init__(self, context, request):
         self.context = context
         self.request = request
@@ -26,39 +27,26 @@ class PbbdViews(object):
         renderer = get_renderer("../../templates/main.pt")
         self.main = renderer.implementation().macros['main']
 
-        renderer = get_renderer("../../templates/pbbd/nav.pt")
+        renderer = get_renderer("../../templates/pbb/nav.pt")
         self.nav = renderer.implementation().macros['nav']
         
-    @view_config(route_name='pbbd',
-                 renderer='../../templates/pbbd/home.pt')
-    def pbbd(self):
+    @view_config(route_name='pbb',
+                 renderer='../../templates/pbb/home.pt')
+    def pbb(self):
         from sipkd.models.apps import osApps
         session = self.request.session
         request = self.request
         resource = None
 
-        if session['logged']<>1:
-           return HTTPFound(location='/logout') 
         url=request.resource_url(resource)
 
-        if self.request.session['sa']==1:
-            opts = osApps.get_rows()
-        else:
-            pass
-  
-        return dict(title="OpenSIPKD",
-                    message="",
-                    usernm=self.request.session['usernm'], 
-                    opts=opts,
-                    url=url)
+        datas=sipkd_init(self.request)
+
+        return dict(datas=datas)
    
-    @view_config(route_name='pbbdlspop',
-                 renderer='../../templates/pbbd/lspop.pt')
-    def pbbdlspop(self):
+    @view_config(route_name='pbblspop',
+                 renderer='../../templates/pbb/lspop.pt')
+    def pbblspop(self):
  
   
-        return dict(title="OpenSIPKD",
-                    message="",
-                    usernm=self.request.session['usernm'], 
-                    opts=opts,
-                    url=url)
+        return dict(datas=datas)

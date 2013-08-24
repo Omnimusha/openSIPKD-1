@@ -1409,6 +1409,10 @@ textarea::-webkit-input-placeholder {
   width: 40px;
 }
 
+.input-mini5 {
+  width: 50px;
+}
+
 .input-small {
   width: 60px;
 }
