@@ -18,7 +18,7 @@
       <label class="control-label">Jns Formulir</label> 
       <div class="controls">
       
-        <input class="input-mini" id="frmjns" name="frmjns" value="${datas.frmjns}">
+        <input id="frmjns" name="frmjns" type="hidden" value="${datas.frmjns}">
         <input class="input-mini4" id="frmjnstxt" name="frmjnstxt" value="${datas.frmjnstxt}" type="text" readonly>
         
         Jns Transaksi

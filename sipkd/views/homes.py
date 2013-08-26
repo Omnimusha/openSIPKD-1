@@ -47,11 +47,9 @@ class SipkdViews(object):
     @view_config(route_name='home',
                  renderer='../templates/home.pt')
     def home(self):
-        datas=sipkd_init(self.request)
+        datas=sipkd_init(self.request, self.context)
         return dict(message = 'Silahkan Login',
-                    logout='',
-                    datas=datas
-                    )
+                    datas=datas)
                     
     
     @view_config(route_name='login',
@@ -86,7 +84,7 @@ class SipkdViews(object):
             datas['message'] = 'Login Gagal'
             datas['title']="Login"
                     
-        return datas
+        return dict(datas=datas)
             
     @view_config(route_name="logout", renderer="../templates/home.pt")
     def logout(self):
@@ -100,8 +98,7 @@ class SipkdViews(object):
     def main(self):
         session = self.request.session
 
-        datas = sipkd_init(self.request)
-        return dict(title="OpenSIPKD",
-                    message="Login Berhasil",
-                    usernm=self.request.session['usernm'], 
-                    datas=datas or null)
+        datas = sipkd_init(self.request, self.context)
+        if session['logged']==0:
+            return HTTPFound(location='/')
+        return dict(datas=datas or null)

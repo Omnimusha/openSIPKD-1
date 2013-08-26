@@ -32,3 +32,23 @@ class osPbb(object):
     def default(cls,o):
         if type(o) is date:
             return o.strftime("%d-%m-%Y")
+            
+    @classmethod
+    def kel_split(cls, kode):
+        return {'kd_propinsi':kode[0:2], 'kd_dati2':kode[2:4], 
+                'kd_kecamatan':kode[4:7], 'kd_kelurahan':kode[7:10],}
+        
+    @classmethod
+    def kel_join(cls, kode):
+        return ''.join( ( kode['kd_propinsi'], kode['kd_dati2'], 
+                          kode['kd_kecamatan'], kode['kd_kelurahan'], ))  
+    @classmethod
+    def kec_split(cls, kode):
+        return {'kd_propinsi':kode[0:2], 'kd_dati2':kode[2:4], 
+                'kd_kecamatan':kode[4:7], }
+        
+    @classmethod
+    def kec_join(cls, kode):
+        return ''.join( ( kode['kd_propinsi'], kode['kd_dati2'], 
+                          kode['kd_kecamatan'],))  
+                        

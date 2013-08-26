@@ -38,8 +38,10 @@ def main(global_config, **settings):
     config.add_route('pbbspop', '/pbb/spop')
     config.add_route('pbbspopc1', '/pbb/spop/c1/{t}/{f}')
     config.add_route('pbbspopc2', '/pbb/spop/c2/{t}/{f}/{n1}/{n2}/{n3}')
-    config.add_route('pbblspop', '/pbb/lspop')
     config.add_route('pbbdsp', '/pbb/dsp/{kode}')
+    
+    config.add_route('pbblspop', '/pbb/lspop')
+    config.add_route('pbblspopc1', '/pbb/lspop/c/{t}/{f}/{n1}')
     
     config.add_route('pbb_ref_kelurahan', '/pbb/ref/kelurahan/{kode}')
     config.add_route('pbb_ref_kelurahan_c', '/pbb/ref/kelurahan/c/{kode}')

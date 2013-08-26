@@ -12,23 +12,24 @@ from pyramid.security import has_permission
 
 from sqlalchemy import *
 
-from sipkd.models import *
-from sipkd.models.model import *
 from sqlalchemy.exc import DBAPIError
 
+import colander
+from deform import Form
+from deform import ValidationFailure
+
+from sipkd.models import *
+from sipkd.models.model import *
 from sipkd.models.apps import osApps
-
 from sipkd.models.pbb.pbb import osPbb
-
 from sipkd.models.pbb.data import *
 from sipkd.models.pbb.data.dat_objek_pajak import osDOP
 from sipkd.models.pbb.data.dat_subjek_pajak import osDSP
 from sipkd.models.pbb.data.dat_op_bumi import osDOPBumi
 from sipkd.models.pbb.ref.lookup import osLookup
 
-import colander
-from deform import Form
-from deform import ValidationFailure
+from sipkd.views.views import *
+
 
 class osSpopValid(colander.MappingSchema):
     pass
@@ -122,8 +123,8 @@ class osSpop(object):
         request = self.request
         resource = None
         url=request.resource_url(resource)
-        
-        datas= osSpop.BlankRow()
+        datas = sipkd_init(request, self.context)
+        datas.update(osSpop.BlankRow())
         datas['wp_pekerjaan']=osLookup.get_wp_pekerjaan()
         datas['wp_status']=osLookup.get_wp_status()
 
@@ -180,11 +181,7 @@ class osSpop(object):
             datas.update(data2)
             datas['form_visible']= '0'
             datas['readonly'] = ''
-            return dict(title="OpenSIPKD",
-                message="",
-                usernm=self.request.session['usernm'], 
-                opts=opts,
-                datas=datas,
+            return dict(datas=datas,
                 url=url)
         return dict(title="OpenSIPKD",
                     message="",

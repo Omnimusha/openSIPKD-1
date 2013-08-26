@@ -33,10 +33,36 @@ class osDOPBng(Base):
     tgl_perekaman_bng = Column(DateTime)
     nip_perekam_bng = Column(String(18))
 
-    
-    def __init__(self):
-      pass
-      
+    def __init__(self,data):
+        self.kd_propinsi=data['kd_propinsi'],
+        self.kd_dati2=data['kd_dati2'],
+        self.kd_kecamatan=data['kd_kecamatan'],
+        self.kd_kelurahan=data['kd_kelurahan'],
+        self.kd_blok=data['kd_blok'],
+        self.no_urut=data['no_urut'],
+        self.kd_jns_op=data['kd_jns_op'],
+        self.no_bng=data['no_bng'],
+        self.kd_jpb=data['kd_jpb'],
+        self.no_formulir_lspop=data['no_formulir_lspop'],
+        self.thn_dibangun_bng=data['thn_dibangun_bng'],
+        self.thn_renovasi_bng=data['thn_renovasi_bng'],
+        self.luas_bng=data['luas_bng'],
+        self.jml_lantai_bng=data['jml_lantai_bng'],
+        self.kondisi_bng=data['kondisi_bng'],
+        self.jns_konstruksi_bng=data['jns_konstruksi_bng'],
+        self.jns_atap_bng=data['jns_atap_bng'],
+        self.kd_dinding=data['kd_dinding'],
+        self.kd_lantai=data['kd_lantai'],
+        self.kd_langit_langit=data['kd_langit_langit'],
+        self.nilai_sistem_bng=data['nilai_sistem_bng'],
+        self.jns_transaksi_bng=data['jns_transaksi_bng'],
+        self.tgl_pendataan_bng=data['tgl_pendataan_bng'],
+        self.nip_pendata_bng=data['nip_pendata_bng'],
+        self.tgl_pemeriksaan_bng=data['tgl_pemeriksaan_bng'],
+        self.nip_pemeriksa_bng=data['nip_pemeriksa_bng'],
+        self.tgl_perekaman_bng=data['tgl_perekaman_bng'],
+        self.nip_perekam_bng=data['nip_perekam_bng'],
+
     @classmethod
     def row2dict(cls,row):
         d = {}
@@ -48,10 +74,6 @@ class osDOPBng(Base):
     @classmethod
     def get_rows(cls):
         return DBSession.query(cls).all()
-        
-    @classmethod
-    def get_by_id(cls,id):
-        return DBSession.query(cls).filter(cls.id==id).first()
         
     @classmethod
     def get_by_nama(cls,nama):
@@ -67,26 +89,33 @@ class osDOPBng(Base):
                 cls.kd_blok==kode['kd_blok'],
                 cls.no_urut==kode['no_urut'],
                 cls.kd_jns_op==kode['kd_jns_op'],
-                cls.no_bumi=='01')
-                ).first()        
+                cls.no_bng==kode['no_bng'],
+              )).first()        
 
     @classmethod
     def get_by_form(cls,frm):
         return DBSession.query(cls).filter( 
-                cls.no_formulir_spop==osPbb.frm_merge(frm)
+                cls.no_formulir_lspop==osPbb.frm_join(frm)
                 ).first()     
                 
     @classmethod
     def tambah(cls, datas):
         data=cls(datas)
-        DBSession.add()
+        DBSession.add(cls(data))
             
     @classmethod
     def edit(cls, data):
-        DBsession.merge()
+        DBsession.merge(cls(data))
             
     @classmethod
-    def hapus(cls,datas,nop):
-        DBSession.query(cls).filter( and_()
-                ).delete()
+    def hapus(cls,datas,kode):
+        DBSession.query(cls).filter( and_( cls.kd_propinsi==kode['kd_propinsi'],
+                cls.kd_dati2==kode['kd_dati2'],
+                cls.kd_kecamatan==kode['kd_kecamatan'],
+                cls.kd_kelurahan==kode['kd_kelurahan'],
+                cls.kd_blok==kode['kd_blok'],
+                cls.no_urut==kode['no_urut'],
+                cls.kd_jns_op==kode['kd_jns_op'],
+                cls.no_bng==kode['no_bng'],
+              )).delete()
 

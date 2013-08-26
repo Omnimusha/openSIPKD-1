@@ -40,13 +40,8 @@ class PbbViews(object):
 
         url=request.resource_url(resource)
 
-        datas=sipkd_init(self.request)
+        datas=sipkd_init(self.request, self.context)
 
         return dict(datas=datas)
    
-    @view_config(route_name='pbblspop',
-                 renderer='../../templates/pbb/lspop.pt')
-    def pbblspop(self):
  
-  
-        return dict(datas=datas)

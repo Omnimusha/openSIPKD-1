@@ -62,7 +62,7 @@ class osfKelurahan(object):
         request = self.request
         resource = None
         url=request.resource_url(resource)
-        datas = sipkd_init(self.request)
+        datas = sipkd_init(self.request, self.context)
         
         datas.update(self.BlankRow())
 

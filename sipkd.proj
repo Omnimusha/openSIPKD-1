@@ -8,18 +8,37 @@
                 <File name="sipkd\models\pbb\data\dat_op_bumi.py" />
                 <File name="sipkd\models\pbb\data\dat_subjek_pajak.py" />
             </Folder>
+            <Folder name="ref">
+                <File name="sipkd\models\pbb\ref\lookup.py" />
+                <File name="sipkd\models\pbb\ref\dati2.py" />
+                <File name="sipkd\models\pbb\ref\kecamatan.py" />
+                <File name="sipkd\models\pbb\ref\kelurahan.py" />
+                <File name="sipkd\models\pbb\ref\propinsi.py" />
+            </Folder>
+            <Folder name="tmp">
+                <File name="sipkd\models\pbb\tmp\maxbundle.py" />
+            </Folder>
         </Folder>
         <Folder name="script">
             <File name="sipkd\static\js\pbb\spop.js" />
+            <File name="sipkd\static\js\pbb\lspop.js" />
         </Folder>
         <Folder name="template">
-            <File name="sipkd\templates\pbbd\home.pt" />
-            <File name="sipkd\templates\pbbd\lspop.pt" />
-            <File name="sipkd\templates\pbbd\nav.pt" />
-            <File name="sipkd\templates\pbbd\spop.pt" />
+            <Folder name="ref">
+                <File name="sipkd\templates\pbb\ref\kelurahan.pt" />
+            </Folder>
+            <File name="sipkd\templates\pbb\home.pt" />
+            <File name="sipkd\templates\pbb\lspop.pt" />
+            <File name="sipkd\templates\pbb\nav.pt" />
+            <File name="sipkd\templates\pbb\spop.pt" />
         </Folder>
-        <File name="sipkd\views\pbbd\pbbd.py" />
-        <File name="sipkd\views\pbbd\spops.py" />
+        <File name="sipkd\views\pbb\data\spops.py" />
+        <File name="sipkd\views\pbb\pbbd.py" />
+        <Folder name="ref">
+            <File name="sipkd\views\pbb\ref\kelurahan.py" />
+        </Folder>
+        <File name="sipkd\views\pbb\data\spops.py" />
+        <File name="sipkd\views\pbb\pbbd.py" />
     </Project>
     <Project name="admin">
         <File name="sipkd\__init__.py" />
@@ -48,7 +67,6 @@
             <File name="sipkd\views\homes.py" />
             <Folder name="pbbm" />
             <Folder name="pbbpos" />
-            <File name="sipkd\views\pbbd\pbbd.py" />
         </Folder>
         <File name="development.ini" />
         <Folder name="template">
