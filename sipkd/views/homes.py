@@ -75,6 +75,7 @@ class SipkdViews(object):
                 session = request.session
                 session['userid'] = row.kode
                 session['usernm'] = row.nama
+                session['user_id']=row.id
                 if login=='sa':
                     session['sa'] = 1
                 else: session['sa']=0

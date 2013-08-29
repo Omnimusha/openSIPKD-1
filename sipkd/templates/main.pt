@@ -14,7 +14,10 @@
     <div metal:fill-slot="apps">
         <form class="btn-group pull-right" >
           <select name="app_id" id="app_id" >
-            <option tal:repeat="opt datas.opts" value="${opt.kode}">
+            <option tal:repeat="opt datas.opts" value="${opt.kode}"
+                    tal:attributes="value opt.kode;
+                            selected python:opt.kode==datas.module"> 
+                <!--span tal:replace="val" /-->
                 ${opt.nama}
             </option>
           </select>

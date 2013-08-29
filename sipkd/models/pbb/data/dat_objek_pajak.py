@@ -89,15 +89,15 @@ class osDOP(Base):
         return DBSession.query(cls).filter(cls.nama==nama).first()
     
     @classmethod
-    def get_by_kode(cls,nop):
+    def get_by_kode(cls,kode):
         return DBSession.query(cls).filter( and_(
-                cls.kd_propinsi==nop.kd_propinsi ,
-                cls.kd_dati2==nop.kd_dati2 ,
-                cls.kd_kecamatan==nop.kd_kecamatan ,
-                cls.kd_kelurahan==nop.kd_kelurahan ,
-                cls.kd_blok==nop.kd_blok ,
-                cls.no_urut==nop.no_urut ,
-                cls.kd_jns_op==nop.kd_jns_op)
+                cls.kd_propinsi==kode['kd_propinsi'],
+                cls.kd_dati2==kode['kd_dati2'],
+                cls.kd_kecamatan==kode['kd_kecamatan'],
+                cls.kd_kelurahan==kode['kd_kelurahan'],
+                cls.kd_blok==kode['kd_blok'],
+                cls.no_urut==kode['no_urut'],
+                cls.kd_jns_op==kode['kd_jns_op'],)
                 ).first()        
 
     @classmethod
@@ -126,12 +126,4 @@ class osDOP(Base):
                 cls.kd_jns_op==nop.kd_jns_op)
                 ).delete()
     
-    @classmethod
-    def frm_max(cls,kode):
-        if kode:
-            frm=''.join((kode['tahun'],kode['bundle'],'%'))
-       
-        return DBSession.query(
-                    func.max(cls.no_formulir_spop).label("frm_max")
-                  ).filter(
-                      cls.no_formulir_spop.like(frm)).first() or Null
+ 

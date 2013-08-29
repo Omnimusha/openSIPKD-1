@@ -31,6 +31,7 @@ $(document).ready(function () {
   }
 
   function readonly() {
+    return false
     if ($("#form_visible").val() == 0) {
       //$("#data").css('display', 'None');
       $("#btn_validate").css('visibility', 'visible');
@@ -43,8 +44,8 @@ $(document).ready(function () {
       $("#kd_jns_op").removeAttr('readonly');
 
       $("#frm1").removeAttr('readonly');
-      $("#frm1").removeAttr('readonly');
-      $("#frm1").removeAttr('readonly');
+      $("#frm2").removeAttr('readonly');
+      $("#frm3").removeAttr('readonly');
 
     } else {
 
@@ -127,13 +128,14 @@ $(document).ready(function () {
         url: '/pbb/lspop/c/' + trans + '/' + frm1 + frm2 + frm3 + '/' + kd_kecamatan + kd_kelurahan + kd_blok + no_urut + kd_jns_op,
         success: function (json) {
           data = JSON.parse(json);
-          if (data['found'] == 1) {
+
+          if (data['frm_found'] == 1) {
             if (data['spop'] == 1) {
               var nopmsg = 'No. Form sudah digunakan pada SPOP ';
               alert(nopmsg);
               return false;
             }  
-            
+
             var nopmsg = 'No. Form sudah digunakan untuk NOP: ' +
               data['kd_propinsi'] + '.' + data['kd_dati2'] + '-' + data['kd_kecamatan'] + '.' + data['kd_kelurahan'] + '-' +
               data['kd_blok'] + '.' + data['no_urut'] + '.' + data['kd_jns_op'];
@@ -152,22 +154,21 @@ $(document).ready(function () {
               }
             }
           }
-          if (data['frm_fail'] == "1") {
-            var c = confirm('No Form Terakhir ' + data['frm_max'] + ' Lanjutkan?');
-            if (!c) return false;
-          }
-          fmsg = '';
-          if (trans == '1' && data['nop_found'] == 1)
-            fmsg = 'Data Obyek Pajak atas NOP ' + nop + ' sudah ada dalam basis data !';
-          else if (trans != '1' && data['nop_found'] == 0)
-            fmsg = 'Data Obyek Pajak atas NOP ' + nop + ' tidak ada dalam basis data !';
-          if (fmsg) {
-            alert(fmsg);
+           
+          if (data['spop_fail'] == "1") {
+            var nopmsg = 'NOP Tidak Ditemukan Dalam Database ';
+            alert(nopmsg);
             return false;
           }
-          fmsg = '';
+
+          if (data['frm_fail'] == "1") {
+            var c = confirm('No Urut Terakhir ' + data['frm_max'] + ' Lanjutkan?');
+            if (!c) return false;
+          }
+          
           $("#form_visible").val('1');
           readonly();
+
         },
         error: function (xhr, desc, er) {
           alert(er);
@@ -179,7 +180,6 @@ $(document).ready(function () {
 
   $("#btn_save").click(function () {
     $("#myform").submit();
-
   })
 
   $("#btn_reset").click(function () {

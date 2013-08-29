@@ -87,7 +87,7 @@ class osLSpop(object):
                 if data:
                     datas.update(data)
                     datas['found'] = 1
-                    datas['spop']=1
+                    datas['spop']=0
                     datas['fail']=1
                     datas['message']=''.join(('Nomor formulir ', osPbb.frm_join(frm),
                                         ' sudah ada dan tidak boleh dipergunakan lagi !'));
@@ -104,7 +104,7 @@ class osLSpop(object):
             if data['c']>0:
                 datas.update(data)
                 datas['found'] = 1
-                datas['spop']=1
+                datas['spop']=0
                 datas['fail']=1
                 datas['message']=''.join(('Nomor formulir ', osPbb.frm_join(frm),
                             ' sudah ada dan tidak boleh dipergunakan lagi !'));
@@ -172,37 +172,51 @@ class osLSpop(object):
         session = request.session
         fields  = request.matchdict
         frm = osPbb.frm_split(fields['f'])
+        nop = osPbb.nop_split(fields['n1'])
+        print 'NOP:',fields['n1']
         datas = sipkd_init(self.request, self.context)
-        datas['found'] = 0
+        datas.update(frm)
+        datas.update(nop)
+        datas['frm_found'] = 0
         datas['spop']=0
+        datas['kd_kanwil']=session['kd_kanwil']
+        datas['kd_kantor']=session['kd_kantor']
         
-        #cek pada spop
+        
+        #cek pada temp_bundle_sppt
         if frm:
-            data=osDOP.row2dict(osDOP.get_by_form(frm))
+            data=osMaxBundle.get_by_kode(datas)
             if data:
-                datas.update(data)
-                datas['found'] = 1
-                datas['spop']=1
-                return datas
-                
-        #cek pada lspop        
-        if frm:
-            data=osDOPBng.row2dict(osDOPBng.get_by_form(frm))
-            if data:
-                datas['found'] = 1
-                datas.update(data)
-                return datas
+                datas.update(osMaxBundle(row2dict(data)))
+                #cek pada spop
+                data=osDOP.row2dict(osDOP.get_by_form(frm))
+                if data:
+                    datas['frm_found'] = 1
+                    datas['spop']=1
+                    return datas
+                    
+                #cek pada lspop
+                data=osDOPBng.row2dict(osDOPBng.get_by_form(frm))
+                if data:
+                    datas['frm_found'] = 1
+                    datas.update(data)
+                    return datas
 
-            datas=osSpop.BlankRow()
-            datas['found'] = 0
+        data=osDOP.row2dict(osDOP.get_by_kode(datas))
+        if data:
+            datas['spop_fail'] = 0
+        else:
+            datas['spop_fail'] = 1
+            return datas
             
-        row=osDOP.frm_max(frm)
+        row=osMaxBundle.get_max(datas)
 
-        if row:
+        if row[0]:
             datas['frm_max']=row[0]
         else:    
-            datas['frm_max']=''.join((frm['tahun'],frm['bundle'],'000'))
-        if abs(float(datas['frm_max'])-float(osPbb.frm_join(frm)))>1:
+            datas['frm_max']='000'
+
+        if abs(float(datas['frm_max'])-float(datas['temp_urut_bundel']))>1:
             datas['frm_fail']=1
         else:
             datas['frm_fail']=0

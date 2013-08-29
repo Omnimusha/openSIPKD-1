@@ -15,12 +15,29 @@ import types
 from sipkd.models.apps import osApps
 from sipkd.views.views import *
 from data.spops import osSpop
-
+from sipkd.models.pbb.user_pbb import osPbbUser
 class PbbViews(object):
     def __init__(self, context, request):
         self.context = context
         self.request = request
+        self.session=request.session
+        if 'logged' not in self.session:
+           HTTPFound(location='/logout')
         
+        data=osPbbUser.get_by_user_id(self.session['user_id'])
+        if data:
+            self.session['kd_kanwil']=data.kd_kanwil
+            self.session['kd_kantor']=data.kd_kantor
+            #session['kd_kppbb'] =data.kd_kppbb
+            #session['kd_bank_tunggal']=data.kd_bank_tunggal
+            #session['kd_bank_persepsi']=data.kd_bank_persepsi
+        else:
+            if self.session['userid']=='sa':
+                self.session['kd_kanwil']='09'
+                self.session['kd_kantor']='19'
+            else:
+                HTTPFound(location='/logout')
+            
         renderer = get_renderer("../../templates/layout.pt")
         self.layout = renderer.implementation().macros['layout']
         
@@ -40,8 +57,9 @@ class PbbViews(object):
 
         url=request.resource_url(resource)
 
+        session['module']='pbb'
         datas=sipkd_init(self.request, self.context)
-
+        
         return dict(datas=datas)
    
  

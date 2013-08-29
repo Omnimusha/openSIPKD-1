@@ -78,13 +78,13 @@ class osMaxBundle(Base):
     @classmethod
     def get_max(cls,data):
         return DBSession.query(
-                func.max(cls.no_formulir_spop).label("frm_max")).filter(
+                func.max(cls.temp_urut_bundel).label("urt_max")).filter(
                 and_(
                   cls.kd_kanwil==data['kd_kanwil'],
                   cls.kd_kantor==data['kd_kantor'],
                   cls.temp_thn_bundel==data['temp_thn_bundel'],
                   cls.temp_no_bundel==data['temp_no_bundel'],
               )).first()
-        
+
     
     

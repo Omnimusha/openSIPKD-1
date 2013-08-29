@@ -15,7 +15,7 @@ def sipkd_init(request,context):
     datas={}
     datas['title']="OpenSIPKD"
     datas['message']="Silahkan Isi Form di bawah ini"
-    
+    datas['module']='module' in request.session and request.session['module'] or ""
     if 'logged' in request.session and request.session['logged']==1:
         datas['usernm']=request.session['usernm'], 
         if request.session['sa']==1:
@@ -25,8 +25,6 @@ def sipkd_init(request,context):
         datas['usernm']=''
         datas['url']=request.resource_url(context, '/')
         request.session['logged']=0
-        
-    
     return datas
 
 @view_config(route_name='home1', renderer='../templates/mytemplate.pt')

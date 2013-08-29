@@ -6,10 +6,11 @@ from pyramid.httpexceptions import HTTPForbidden
 from pyramid.security import remember
 from pyramid.security import forget
 from pyramid.security import has_permission
-from sqlalchemy import *
-from ..models import *
+#from sqlalchemy import *
+#from sipkd.models import *
 from sqlalchemy.exc import DBAPIError
 import json
+from sipkd.views.views import sipkd_init
 
 class AdminViews(object):
     def __init__(self, context, request):
@@ -28,10 +29,12 @@ class AdminViews(object):
     @view_config(route_name='admin',
                  renderer='../templates/admin/home.pt')
     def admin(self):
-        from ..models.apps import osApps
+        from sipkd.models.apps import osApps
         session = self.request.session
         request = self.request
+        session['module']='admin'
         resource = None
+        datas=sipkd_init(self.request, self.context)
         if session['logged']<>1:
            return HTTPFound(location='/logout') 
         opts=[dict(nama='ADMIN', kode='admin')]
@@ -42,19 +45,15 @@ class AdminViews(object):
             print opts
         else:
             pass
-  
-        return dict(title="OpenSIPKD",
-                    message="Login Berhasil",
-                    usernm=self.request.session['usernm'], 
-                    opts=opts,
-                    url=url)
+        return dict(datas=datas, url=url)
                     
-    @view_config(route_name='apps',
-                 renderer='../templates/admin/apps.pt')
+    @view_config(route_name = 'admin_apps',
+                 renderer   = '../templates/admin/apps.pt')
     def apps(self):
         from ..models.apps import osApps
         session = self.request.session
         request = self.request
+        datas=sipkd_init(self.request, self.context)
         resource = None
         if session['logged']<>1:
            return HTTPFound(location='/logout') 
@@ -66,13 +65,9 @@ class AdminViews(object):
         else:
             pass
   
-        return dict(title="OpenSIPKD",
-                    message="",
-                    usernm=self.request.session['usernm'], 
-                    opts=opts,
-                    url=url)
+        return dict(datas=datas, url=url)
 
-    @view_config(route_name='appsgrid', renderer='json')
+    @view_config(route_name='admin_apps_grid', renderer='json')
     def appsgrid(self):
         from ..models.apps import osApps
         resource = None

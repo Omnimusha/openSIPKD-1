@@ -112,6 +112,7 @@ class osSpop(object):
         else:
             datas['frm_fail']=0
         return datas
+        
 # frm action
     @view_config(route_name='pbbspop',
                  renderer='../../../templates/pbb/spop.pt')
@@ -121,6 +122,7 @@ class osSpop(object):
         #   return HTTPFound(location='/logout') 
 
         request = self.request
+        
         resource = None
         url=request.resource_url(resource)
         datas = sipkd_init(request, self.context)
@@ -151,6 +153,7 @@ class osSpop(object):
                     opts=opts,
                     datas=datas,
                     url=url)
+
             # Process the valid form data, do some work
             #try:
             if osDSP.get_by_kode(datas['subjek_pajak_id']):
