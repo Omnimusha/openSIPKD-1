@@ -18,6 +18,7 @@
             <Folder name="tmp">
                 <File name="sipkd\models\pbb\tmp\maxbundle.py" />
             </Folder>
+            <File name="sipkd\models\pbb\user_pbb.py" />
         </Folder>
         <Folder name="script">
             <File name="sipkd\static\js\pbb\spop.js" />
@@ -39,6 +40,8 @@
         </Folder>
         <File name="sipkd\views\pbb\data\spops.py" />
         <File name="sipkd\views\pbb\pbbd.py" />
+        <File name="sipkd\templates\pbb\lspop.pt" />
+        <File name="sipkd\views\pbb\data\lspops.py" />
     </Project>
     <Project name="admin">
         <File name="sipkd\__init__.py" />
