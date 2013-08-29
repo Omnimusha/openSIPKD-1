@@ -2,7 +2,11 @@ from sipkd.models.model import *
 from sqlalchemy import and_
 from sipkd.models.pbb.pbb import osPbb
 import types
+<<<<<<< HEAD
 #
+=======
+#sugiana
+>>>>>>> 22096fd4068610a2547370c67849ebf8005e2c2f
 
 class osDSP(Base):
     __tablename__ = 'dat_subjek_pajak'
