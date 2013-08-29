@@ -2,7 +2,7 @@ from sipkd.models.model import *
 from sqlalchemy import and_
 from sipkd.models.pbb.pbb import osPbb
 import types
-
+#aagusti
 
 class osDSP(Base):
     __tablename__ = 'dat_subjek_pajak'

@@ -30,13 +30,19 @@ def main(global_config, **settings):
     config.add_route('login', '/login')
     config.add_route('logout', '/logout')
     config.add_route('admin', '/admin')
-    config.add_route('admin_apps',  '/apps')
-    config.add_route('admin_apps_grid', '/apps/grid')
+    config.add_route('pbb', '/pbb')
+    config.add_route('rka', '/rka')
+    config.add_route('spp', '/spp')
+    config.add_route('spm', '/spm')
+    config.add_route('sp2d', '/sp2d')
+    config.add_route('pad', '/pad')
+    
+    config.add_route('admin_apps',  '/admin/apps')
+    config.add_route('admin_apps_grid', '/admin/apps/grid')
     
     config.add_route('pbbpos', '/pbbpos')
     config.add_route('pbbm', '/pbbm')
     
-    config.add_route('pbb', '/pbb')
     config.add_route('pbbspop', '/pbb/spop')
     config.add_route('pbbspopc1', '/pbb/spop/c1/{t}/{f}')
     config.add_route('pbbspopc2', '/pbb/spop/c2/{t}/{f}/{n1}/{n2}/{n3}')
