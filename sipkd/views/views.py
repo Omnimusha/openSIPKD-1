@@ -1,5 +1,6 @@
 from pyramid.response import Response
 from pyramid.view import view_config
+from pyramid.httpexceptions import HTTPFound
 
 from sqlalchemy.exc import DBAPIError
 
@@ -8,6 +9,23 @@ from ..models.model import (
     #osApp,
     )
 
+from sipkd.models.apps import osApps
+
+def sipkd_init(request,context):
+    datas={}
+    datas['title']="OpenSIPKD"
+    datas['message']="Silahkan Isi Form di bawah ini"
+    datas['module']='module' in request.session and request.session['module'] or ""
+    if 'logged' in request.session and request.session['logged']==1:
+        datas['usernm']=request.session['usernm'], 
+        if request.session['sa']==1:
+            datas['opts']=osApps.get_rows()
+            opts = osApps.get_rows()
+    else:
+        datas['usernm']=''
+        datas['url']=request.resource_url(context, '/')
+        request.session['logged']=0
+    return datas
 
 @view_config(route_name='home1', renderer='../templates/mytemplate.pt')
 def my_view(request):

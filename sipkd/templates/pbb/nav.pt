@@ -11,8 +11,16 @@
                 <li class="dropdown ">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Pendataan <strong class="caret"></strong></a>
                     <ul class="dropdown-menu">
-                        <li><a href="${url}pbbd/spop">SPOP</a></li>
-                        <li><a href="${url}pbbd/lspop">LSPOP</a></li>
+                        <li><a href="/pbb/spop">SPOP</a></li>
+                        <li><a href="/pbb/lspop">LSPOP</a></li>
+                        <li><a href="/pbb/indiv">Penilaian Individu</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown ">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Referensi <strong class="caret"></strong></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/pbb/ref/kecamatan/1">Kecamatan</a></li>
+                        <li><a href="/pbb/ref/kelurahan/1">Kelurahan/Desa</a></li>
                     </ul>
                 </li>
         </ul>
@@ -21,7 +29,7 @@
       </div>
       <div class="container-fluid">
         <div id="msg_helper" class="alert alert-info"><button type="button"
-            class="close" data-dismiss="alert">&times;</button>${message}</div>
+            class="close" data-dismiss="alert">&times;</button>${datas.message}</div>
       </div>
       
     </div>

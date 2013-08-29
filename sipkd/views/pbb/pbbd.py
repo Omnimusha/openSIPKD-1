@@ -13,52 +13,53 @@ from sqlalchemy.exc import DBAPIError
 import json
 import types
 from sipkd.models.apps import osApps
+from sipkd.views.views import *
 from data.spops import osSpop
-
-class PbbdViews(object):
+from sipkd.models.pbb.user_pbb import osPbbUser
+class PbbViews(object):
     def __init__(self, context, request):
         self.context = context
         self.request = request
+        self.session=request.session
+        if 'logged' not in self.session:
+           HTTPFound(location='/logout')
         
+        data=osPbbUser.get_by_user_id(self.session['user_id'])
+        if data:
+            self.session['kd_kanwil']=data.kd_kanwil
+            self.session['kd_kantor']=data.kd_kantor
+            #session['kd_kppbb'] =data.kd_kppbb
+            #session['kd_bank_tunggal']=data.kd_bank_tunggal
+            #session['kd_bank_persepsi']=data.kd_bank_persepsi
+        else:
+            if self.session['userid']=='sa':
+                self.session['kd_kanwil']='09'
+                self.session['kd_kantor']='19'
+            else:
+                HTTPFound(location='/logout')
+            
         renderer = get_renderer("../../templates/layout.pt")
         self.layout = renderer.implementation().macros['layout']
         
         renderer = get_renderer("../../templates/main.pt")
         self.main = renderer.implementation().macros['main']
 
-        renderer = get_renderer("../../templates/pbbd/nav.pt")
+        renderer = get_renderer("../../templates/pbb/nav.pt")
         self.nav = renderer.implementation().macros['nav']
         
-    @view_config(route_name='pbbd',
-                 renderer='../../templates/pbbd/home.pt')
-    def pbbd(self):
+    @view_config(route_name='pbb',
+                 renderer='../../templates/pbb/home.pt')
+    def pbb(self):
         from sipkd.models.apps import osApps
         session = self.request.session
         request = self.request
         resource = None
 
-        if session['logged']<>1:
-           return HTTPFound(location='/logout') 
         url=request.resource_url(resource)
 
-        if self.request.session['sa']==1:
-            opts = osApps.get_rows()
-        else:
-            pass
-  
-        return dict(title="OpenSIPKD",
-                    message="",
-                    usernm=self.request.session['usernm'], 
-                    opts=opts,
-                    url=url)
+        session['module']='pbb'
+        datas=sipkd_init(self.request, self.context)
+        
+        return dict(datas=datas)
    
-    @view_config(route_name='pbbdlspop',
-                 renderer='../../templates/pbbd/lspop.pt')
-    def pbbdlspop(self):
  
-  
-        return dict(title="OpenSIPKD",
-                    message="",
-                    usernm=self.request.session['usernm'], 
-                    opts=opts,
-                    url=url)

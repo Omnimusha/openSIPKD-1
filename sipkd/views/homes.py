@@ -7,8 +7,10 @@ from pyramid.security import remember
 from pyramid.security import forget
 from pyramid.security import has_permission
 from sqlalchemy import *
-from sipkd.models import *
 from sqlalchemy.exc import DBAPIError
+from sipkd.models import *
+from sipkd.views.views import *
+
 #from ..models import model  
 #from usersdb import USERS
 
@@ -45,11 +47,9 @@ class SipkdViews(object):
     @view_config(route_name='home',
                  renderer='../templates/home.pt')
     def home(self):
-        return dict(title='OpenSIPKD',
-                    message = 'Silahkan Login',
-                    logout='',
-                    apps=''
-                    )
+        datas=sipkd_init(self.request, self.context)
+        return dict(message = 'Silahkan Login',
+                    datas=datas)
                     
     
     @view_config(route_name='login',
@@ -75,15 +75,17 @@ class SipkdViews(object):
                 session = request.session
                 session['userid'] = row.kode
                 session['usernm'] = row.nama
+                session['user_id']=row.id
                 if login=='sa':
                     session['sa'] = 1
                 else: session['sa']=0
                 session['logged']=1
                 return HTTPFound(location='/main',
                                  headers=headers)
-            message = 'Login Gagal'
-        return dict(title="Login",
-                    message=message,)
+            datas['message'] = 'Login Gagal'
+            datas['title']="Login"
+                    
+        return dict(datas=datas)
             
     @view_config(route_name="logout", renderer="../templates/home.pt")
     def logout(self):
@@ -95,20 +97,9 @@ class SipkdViews(object):
 
     @view_config(route_name="main", renderer="../templates/main.pt")
     def main(self):
-        from ..models.apps import osApps
         session = self.request.session
 
-        if session['logged']<>1:
-           return HTTPFound(location='/logout') 
-        opts=[dict(nama='ADMIN', kode='admin')]
-        if self.request.session['sa']==1:
-            opts = osApps.get_rows()
-            
-        else:
-            pass
-  
-        return dict(title="OpenSIPKD",
-                    message="Login Berhasil",
-                    usernm=self.request.session['usernm'], 
-                    opts=opts)
-
+        datas = sipkd_init(self.request, self.context)
+        if session['logged']==0:
+            return HTTPFound(location='/')
+        return dict(datas=datas or null)

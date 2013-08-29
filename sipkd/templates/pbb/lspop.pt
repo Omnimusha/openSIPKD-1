@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<div metal:use-macro="view.nav">
+
+    <div metal:fill-slot="content">
+      <div class="content">
+          <div class="container-fluid">
+          <ul class="nav nav-tabs">
+            <li class="active">
+              <a href="#"><strong>SPOP</strong></a>
+            </li>
+          </ul>
+          
+<script src="${request.static_url('sipkd:static/js/pbb/lspop.js')}" ></script>
+<div class="content">
+  
+  <div class="container-fluid">
+    <form class="form-horizontal" action='/pbbd/spop' method='POST'>
+    <div class="control-group">    
+      <label class="control-label">Jns Formulir</label> 
+      <div class="controls">
+        <input id="form_visible" name="form_visible" type="hidden" value="${datas.form_visible}">
+        <input id="frmjns" name="frmjns" type="hidden" value="${datas.frmjns}">
+        <input class="input-mini4" id="frmjnstxt" name="frmjnstxt" value="${datas.frmjnstxt}" type="text" readonly>
+        
+        Jns Transaksi
+        <select id="jns_transaksi_op"  >
+            <option value="1" >Perekaman Data Bangunan</option>
+            <option value="2" >Pemutakhiran Data Bangunan</option>
+            <option value="3">Penghapusan Bangunan</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="control-group">    
+      <label class="control-label">NOP</label> 
+      <div class="controls">  
+     
+        <input class="input-mini2" id="kd_propinsi" name="kd_propinsi" type="text" value="${datas.kd_propinsi}" readonly>
+        <input class="input-mini2" id="kd_dati2" name="kd_dati2" type="text" value="${datas.kd_dati2}" readonly>
+        <input class="input-mini3" id="kd_kecamatan" maxlength="3" name="kd_kecamatan" value="${datas.kd_kecamatan}" type="text" >
+        <input class="input-mini3" id="kd_kelurahan" maxlength="3" name="kd_kelurahan" value="${datas.kd_kelurahan}" type="text" >
+        <input class="input-mini3" id="kd_blok" maxlength="3" name="kd_blok" value="${datas.kd_blok}" type="text" >
+        <input class="input-mini4" id="no_urut" maxlength="4" name="no_urut" value="${datas.no_urut}" type="text" >
+        <input class="input-mini1" id="kd_jns_op" maxlength="1" name="kd_jns_op" value="${datas.kd_jns_op}" type="text" >
+      </div>
+    </div>
+    
+    
+    <div class="control-group">    
+      <label class="control-label">No Formulir</label> 
+      <div class="controls">  
+        <input class="input-mini4" id="frm1" name="frm1" type="text" maxlength="4" value="${datas.frm1}">
+        <input class="input-mini4" id="frm2" name="frm2" type="text" maxlength="4" value="${datas.frm2}">
+        <input class="input-mini3" id="frm3" name="frm3" type="text" maxlength="3" value="${datas.frm3}">
+        <input type="button" class="btn btn-primary" id="btn_validate" name="btn_validate" value="Validate">
+      </div>
+    </div>
+
+    <div id="data" style="display: block">
+      <fieldset>
+        <legend class="small"><strong>Rincian Data Bangunan</strong></legend>
+        <div class="row">
+          <span class="span5">
+            <label class="control-label">No Bangunan</label> 
+            <div class="controls">  
+              <input class="input-mini4" id="frm1" name="frm1" type="text" maxlength="3" value="${datas.frm1}">
+            </div>
+            
+            <label class="control-label">Jenis</label> 
+            <div class="controls">  
+              <input class="input-mini4" id="frm1" name="frm1" type="text" maxlength="2" value="${datas.frm1}">
+              <select id="select1"><option>1</option></select>
+            </div>
+            <div class="row">
+              <span class="span3">
+                <label class="control-label">Luas</label> 
+                <div class="controls">  
+                  <input class="input-mini4" id="frm1" name="frm1" type="text" value="${datas.frm1}">
+                </div>
+              </span>
+              
+              <span class="span3">
+                <label class="control-label">Jml. Lantai</label> 
+                <div class="controls">  
+                  <input class="input-mini4" id="frm1" name="frm1" type="text" value="${datas.frm1}">
+                </div>
+              </span>
+            </div>
+            <div class="row">
+              <span class="span3">
+                <label class="control-label">Thn Dibangun</label> 
+                <div class="controls">  
+                  <input class="input-mini4" id="frm1" name="frm1" type="text" maxlength="4" value="${datas.frm1}">
+                </div>
+              </span>
+              
+              <span class="span3">
+                <label class="control-label">Thn. Renovasi</label> 
+                <div class="controls">  
+                  <input class="input-mini4" id="frm1" name="frm1" type="text" maxlength="4" value="${datas.frm1}">
+                </div>
+              </span>
+            </div>
+            <label class="control-label">Kondisi</label> 
+            <div class="controls">  
+              <input class="input-mini4" id="frm1" name="frm1" type="text" maxlength="4" value="${datas.frm1}">
+              <select id="select1"><option>1</option></select>
+            </div>
+                        
+          </span>
+          
+          <span class="span5">
+            <label class="control-label">Konstruksi</label> 
+            <div class="controls">  
+              <input class="input-mini1" id="frm1" name="frm1" type="text" maxlength="1" value="${datas.frm1}">
+              <select id="select1"><option>1</option></select>
+            </div>
+            
+            <label class="control-label">Atap</label> 
+            <div class="controls">  
+              <input class="input-mini1" id="frm1" name="frm1" type="text" maxlength="1" value="${datas.frm1}">
+              <select id="select1"><option>1</option></select>
+            </div>
+            
+            <label class="control-label">Dinding</label> 
+            <div class="controls">  
+              <input class="input-mini1" id="frm1" name="frm1" type="text" maxlength="1" value="${datas.frm1}">
+              <select id="select1"><option>1</option></select>
+            </div>
+            
+            <label class="control-label">Lantai</label> 
+            <div class="controls">  
+              <input class="input-mini1" id="frm1" name="frm1" type="text" maxlength="1" value="${datas.frm1}">
+              <select id="select1"><option>1</option></select>
+            </div>
+            <label class="control-label">Langit2</label> 
+            <div class="controls">  
+              <input class="input-mini1" id="frm1" name="frm1" type="text" maxlength="1" value="${datas.frm1}">
+              <select id="select1"><option>1</option></select>
+            </div>
+          </span>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend class="small"><strong>Fasilitas</strong></legend>
+        <div class="row">
+          <span class="span5">
+            <label class="control-label">Daya Listrik</label> 
+            <div class="controls">  
+              <input class="input-mini4" id="frm1" name="frm1" type="text" maxlength="3" value="${datas.frm1}">Watt
+            </div>
+            
+            <label class="control-label">Jenis</label> 
+            <div class="controls">  
+              <input class="input-mini4" id="frm1" name="frm1" type="text" maxlength="2" value="${datas.frm1}">
+              <select id="select1"><option>1</option></select>
+            </div>
+            
+            <div class="row">
+              <span class="span3">
+                <label class="control-label">Luas</label> 
+                <div class="controls">  
+                  <input class="input-mini4" id="frm1" name="frm1" type="text" value="${datas.frm1}">
+                </div>
+              </span>
+              
+              <span class="span3">
+                <label class="control-label">Jml. Lantai</label> 
+                <div class="controls">  
+                  <input class="input-mini4" id="frm1" name="frm1" type="text" value="${datas.frm1}">
+                </div>
+              </span>
+            </div>
+            <div class="row">
+              <span class="span3">
+                <label class="control-label">Thn Dibangun</label> 
+                <div class="controls">  
+                  <input class="input-mini4" id="frm1" name="frm1" type="text" maxlength="4" value="${datas.frm1}">
+                </div>
+              </span>
+              
+              <span class="span3">
+                <label class="control-label">Thn. Renovasi</label> 
+                <div class="controls">  
+                  <input class="input-mini4" id="frm1" name="frm1" type="text" maxlength="4" value="${datas.frm1}">
+                </div>
+              </span>
+            </div>
+            <label class="control-label">Kondisi</label> 
+            <div class="controls">  
+              <input class="input-mini4" id="frm1" name="frm1" type="text" maxlength="4" value="${datas.frm1}">
+              <select id="select1"><option>1</option></select>
+            </div>
+                        
+          </span>
+          <span class="span5">
+            <label class="control-label">Konstruksi</label> 
+            <div class="controls">  
+              <input class="input-mini1" id="frm1" name="frm1" type="text" maxlength="1" value="${datas.frm1}">
+              <select id="select1"><option>1</option></select>
+            </div>
+            
+            <label class="control-label">Atap</label> 
+            <div class="controls">  
+              <input class="input-mini1" id="frm1" name="frm1" type="text" maxlength="1" value="${datas.frm1}">
+              <select id="select1"><option>1</option></select>
+            </div>
+            
+            <label class="control-label">Dinding</label> 
+            <div class="controls">  
+              <input class="input-mini1" id="frm1" name="frm1" type="text" maxlength="1" value="${datas.frm1}">
+              <select id="select1"><option>1</option></select>
+            </div>
+            
+            <label class="control-label">Lantai</label> 
+            <div class="controls">  
+              <input class="input-mini1" id="frm1" name="frm1" type="text" maxlength="1" value="${datas.frm1}">
+              <select id="select1"><option>1</option></select>
+            </div>
+            
+            <label class="control-labe1">Langit2</label> 
+            <div class="controls">  
+              <input class="input-mini1" id="frm1" name="frm1" type="text" maxlength="1" value="${datas.frm1}">
+              <select id="select1"><option>1</option></select>
+            </div>
+          </span>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend class="small">PERKANTORAN SWASTA (JPB 02)</legend>
+        <div class="row">
+          <span class="span6">
+            <label class="control-label">Kls Bangunan</label> 
+            <div class="controls">  
+              <input class="input-mini4" id="frm1" name="frm1" type="text" maxlength="3" value="${datas.frm1}">
+              <input class="input-midle" id="frm1" name="frm1" type="text" maxlength="10" value="${datas.frm1}">
+            </div>
+          </span>
+        </div>
+      </fieldset>
+      
+      <fieldset>
+        <legend class="small">PABRIK (JPB 03)</legend>
+        <div class="row">
+          <span class="span4">
+            <label class="control-label">Tinggi Kolom (M)</label> 
+            <div class="controls">  
+              <input class="input-mini4" id="frm1" name="frm1" type="text" maxlength="3" value="${datas.frm1}">
+            </div>
+          </span>
+          <span class="span4">
+            <label class="control-label">Lebar Bentang (M)</label> 
+            
+            <div class="controls">  
+              <input class="input-mini4" id="frm1" name="frm1" type="text" maxlength="3" value="${datas.frm1}">
+            </div>
+          </span>
+        </div>
+        
+        <div class="row">
+          <span class="span4">
+            <label class="control-label">Daya Dukung (Kg/M2)</label> 
+            <div class="controls">  
+              <input class="input-mini4" id="frm1" name="frm1" type="text" maxlength="3" value="${datas.frm1}">
+            </div>
+          </span>
+          <span class="span4">
+            <label class="control-label">Keliling Dinding (M)</label> 
+            <div class="controls">  
+              <input class="input-mini4" id="frm1" name="frm1" type="text" maxlength="3" value="${datas.frm1}">
+            </div>
+          </span>
+          <span class="span4">
+            <label class="control-label">Luas Mezzanine (M2)</label> 
+            <div class="controls">  
+              <input class="input-mini4" id="frm1" name="frm1" type="text" maxlength="3" value="${datas.frm1}">
+            </div>
+          </span>
+        </div>
+      </fieldset>
+      
+      <fieldset>
+        <legend class="small">TOKO/APOTIK/PASAR/RUKO (JPB 04)</legend>
+        <div class="row">
+          <span class="span6">
+            <label class="control-label">Kls Bangunan</label> 
+            <div class="controls">  
+              <input class="input-mini4" id="frm1" name="frm1" type="text" maxlength="3" value="${datas.frm1}">
+              <input class="input-midle" id="frm1" name="frm1" type="text" maxlength="10" value="${datas.frm1}">
+            </div>
+          </span>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend class="small">RUMAH SAKIT/KLINIK (JPB 05)</legend>
+        <div class="row">
+          <span class="span12">
+            <label class="control-label">Kls Bangunan</label> 
+            <div class="controls">  
+              <input class="input-mini4" id="frm1" name="frm1" type="text" maxlength="3" value="${datas.frm1}">
+              <input class="input-midle" id="frm1" name="frm1" type="text" maxlength="10" value="${datas.frm1}">
+              Luas Kamar dengan AC Central <input class="input-mini4" id="frm1" name="frm1" type="text" maxlength="4" value="${datas.frm1}">
+              Luas Ruang lain AC Central <input class="input-mini4" id="frm1" name="frm1" type="text" maxlength="4" value="${datas.frm1}">
+            </div>
+          </span>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend class="small">OLAH RAGA/REKREASI (JPB 06)</legend>
+        <div class="row">
+          <span class="span6">
+            <label class="control-label">Kls Bangunan</label> 
+            <div class="controls">  
+              <input class="input-mini4" id="frm1" name="frm1" type="text" maxlength="3" value="${datas.frm1}">
+              <input class="input-midle" id="frm1" name="frm1" type="text" maxlength="10" value="${datas.frm1}">
+            </div>
+          </span>
+        </div>
+      </fieldset>      
+      
+      <fieldset>
+        <legend class="small">HOTEL/WISMA (JPB 07)</legend>
+        <div class="row">
+          <span class="span12">
+            <label class="control-label">Kls Bangunan</label> 
+            <div class="controls">  
+              <input class="input-mini4" id="frm1" name="frm1" type="text" maxlength="3" value="${datas.frm1}">
+              <input class="input-midle" id="frm1" name="frm1" type="text" maxlength="10" value="${datas.frm1}">
+              Jumlah Kamar <input class="input-mini4" id="frm1" name="frm1" type="text" maxlength="4" value="${datas.frm1}">
+              Jumlah Bintang <input class="input-mini4" id="frm1" name="frm1" type="text" maxlength="4" value="${datas.frm1}">
+
+            </div>
+          </span>
+        </div>
+        <div class="row">
+          <span class="span12">
+            <label class="control-label">&nbsp</label> 
+            <div class="controls">  
+              Luas Kamar dengan AC Central <input class="input-mini4" id="frm1" name="frm1" type="text" maxlength="4" value="${datas.frm1}">
+              Luas Ruang lain AC Central <input class="input-mini4" id="frm1" name="frm1" type="text" maxlength="4" value="${datas.frm1}">
+            </div>
+          </span>
+        </div>
+
+        
+      </fieldset>     
+
+      <fieldset>
+        <legend class="small">BENGKEL/GUDANG/PERTANIAN (JPB 08)</legend>
+        <div class="row">
+       <div class="row">
+          <span class="span4">
+            <label class="control-label">Tinggi Kolom (M)</label> 
+            <div class="controls">  
+              <input class="input-mini4" id="frm1" name="frm1" type="text" maxlength="3" value="${datas.frm1}">
+            </div>
+          </span>
+          <span class="span4">
+            <label class="control-label">Lebar Bentang (M)</label> 
+            <div class="controls">  
+              <input class="input-mini4" id="frm1" name="frm1" type="text" maxlength="3" value="${datas.frm1}">
+            </div>
+          </span>
+        </div>
+        
+        <div class="row">
+          <span class="span4">
+            <label class="control-label">Daya Dukung (Kg/M2)</label> 
+            <div class="controls">  
+              <input class="input-mini4" id="frm1" name="frm1" type="text" maxlength="3" value="${datas.frm1}">
+            </div>
+          </span>
+          <span class="span4">
+            <label class="control-label">Keliling Dinding (M)</label> 
+            <div class="controls">  
+              <input class="input-mini4" id="frm1" name="frm1" type="text" maxlength="3" value="${datas.frm1}">
+            </div>
+          </span>
+          <span class="span4">
+            <label class="control-label">Luas Mezzanine (M2)</label> 
+            <div class="controls">  
+              <input class="input-mini4" id="frm1" name="frm1" type="text" maxlength="3" value="${datas.frm1}">
+            </div>
+          </span>
+        </div>
+ 
+        </div>
+      </fieldset>     
+      
+      <fieldset>
+        <legend class="small">GEDUNG PEMERINTAH (JPB 09)</legend>
+        <div class="row">
+          <span class="span6">
+            <label class="control-label">Kls Bangunan</label> 
+            <div class="controls">  
+              <input class="input-mini4" id="frm1" name="frm1" type="text" maxlength="3" value="${datas.frm1}">
+              <input class="input-midle" id="frm1" name="frm1" type="text" maxlength="10" value="${datas.frm1}">
+            </div>
+          </span>
+        </div>
+      </fieldset> 
+ '
+      <fieldset>
+        <legend class="small">BANGUNAN PARKIR (JPB 12)</legend>
+        <div class="row">
+          <span class="span6">
+            <label class="control-label">Kls Bangunan</label> 
+            <div class="controls">  
+              <input class="input-mini4" id="frm1" name="frm1" type="text" maxlength="3" value="${datas.frm1}">
+              <input class="input-midle" id="frm1" name="frm1" type="text" maxlength="10" value="${datas.frm1}">
+            </div>
+          </span>
+        </div>
+      </fieldset>   
+      
+      <fieldset>
+        <legend class="small">APARTEMEN (JPB 13)</legend>
+        <div class="row">
+          <span class="span6">
+            <label class="control-label">Kls Bangunan</label> 
+            <div class="controls">  
+              <input class="input-mini4" id="frm1" name="frm1" type="text" maxlength="3" value="${datas.frm1}">
+              <input class="input-midle" id="frm1" name="frm1" type="text" maxlength="10" value="${datas.frm1}">
+              
+              Jumlah Apartemen <input class="input-mini4" id="frm1" name="frm1" type="text" maxlength="4" value="${datas.frm1}">
+
+            </div>
+          </span>
+        </div>
+        <div class="row">
+          <span class="span12">
+            <label class="control-label">&nbsp</label> 
+            <div class="controls">  
+              Luas Apartemen dengan AC Central <input class="input-mini4" id="frm1" name="frm1" type="text" maxlength="4" value="${datas.frm1}">
+              Luas Ruang lain AC Central <input class="input-mini4" id="frm1" name="frm1" type="text" maxlength="4" value="${datas.frm1}">
+            </div>
+          </span>
+        </div>
+      </fieldset>  
+      
+
+      <fieldset>
+        <legend class="small">POMPA BENSIN (JPB 14)</legend>
+        <div class="row">
+          <span class="span6">
+            <label class="control-label">Kls Bangunan</label> 
+            <div class="controls">  
+              <input class="input-mini4" id="frm1" name="frm1" type="text" maxlength="3" value="${datas.frm1}">
+              <input class="input-midle" id="frm1" name="frm1" type="text" maxlength="10" value="${datas.frm1}">
+            </div>
+          </span>
+        </div>
+      </fieldset>  
+      
+      <fieldset>
+        <legend class="small">TANGKI MINYAK (JPB 15)</legend>
+        <div class="row">
+          <span class="span6">
+            <label class="control-label">Letak Tangki</label> 
+            <div class="controls">  
+              <input class="input-mini4" id="frm1" name="frm1" type="text" maxlength="3" value="${datas.frm1}">
+              <input class="input-midle" id="frm1" name="frm1" type="text" maxlength="10" value="${datas.frm1}">
+              Kapasitas tangki <input class="input-mini4" id="frm1" name="frm1" type="text" maxlength="3" value="${datas.frm1}">
+              
+            </div>
+          </span>
+        </div>
+      </fieldset>  
+      <fieldset>
+        <legend class="small">GEDUNG SEKOLAH (JPB 16)</legend>
+        <div class="row">
+          <span class="span6">
+            <label class="control-label">Kls Bangunan</label> 
+            <div class="controls">  
+              <input class="input-mini4" id="frm1" name="frm1" type="text" maxlength="3" value="${datas.frm1}">
+              <input class="input-midle" id="frm1" name="frm1" type="text" maxlength="10" value="${datas.frm1}">
+            </div>
+          </span>
+        </div>
+      </fieldset>  
+      <input type="submit" class="btn btn-success" id="btn_save" name="btn_save" value="Proses"/>
+      <input type="reset" class="btn btn-warning" id="btn_reset" name="btn_reset" value="Batal"/>
+    </div>
+    </form>
+  </div>
+  
+</div>         
+              
+ 
+        </div>
+      </div>
+    </div>
+</div>

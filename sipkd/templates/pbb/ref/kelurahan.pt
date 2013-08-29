@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<div metal:use-macro="view.nav">
+
+    <div metal:fill-slot="content">
+      <div class="content">
+          <div class="container-fluid">
+          <ul class="nav nav-tabs">
+            <li class="active">
+              <a href="#"><strong>Kelurahan</strong></a>
+            </li>
+          </ul>
+<script>          
+$(document).ready(function () {
+  function set_value(data){
+      $("#kd_kecamatan").val(data['kd_kecamatan']);
+      $("#kd_kelurahan").val(data['kd_kelurahan']);
+      $("#kd_sektor").val(data['kd_sektor']);
+      $("#nm_kelurahan").val(data['nm_kelurahan']);
+      $("#no_kelurahan").val(data['no_kelurahan']);
+      $("#kd_pos_kelurahan").val(data['kd_pos_kelurahan']);
+      
+  }
+  
+  function readonly(){
+    if ($("#form_visible").val()==0){
+        $("#btn_save").attr('disabled', 'disabled');
+
+        $("#kd_kecamatan").removeAttr('readonly');
+        $("#kd_kelurahan").removeAttr('readonly');
+        $("#kd_sektor").attr('readonly', 'readonly');
+        $("#nm_kelurahan").attr('readonly', 'readonly');
+        $("#no_kelurahan").attr('readonly', 'readonly');
+        $("#kd_pos_kelurahan").attr('readonly', 'readonly');
+
+      }else{
+        $("#btn_save").removeAttr('disabled');
+
+        $("#kd_kecamatan").attr('readonly', 'readonly');
+        $("#kd_kelurahan").attr('readonly', 'readonly');
+        $("#kd_sektor").removeAttr('readonly');
+        $("#nm_kelurahan").removeAttr('readonly');
+        $("#no_kelurahan").removeAttr('readonly');
+        $("#kd_pos_kelurahan").removeAttr('readonly');
+    }
+  }
+  readonly();
+
+  $("#kd_kecamatan, #kd_kelurahan").keypress(function () {
+    if ($("#form_visible").val()==0){
+
+      var kd_propinsi = $("#kd_propinsi").val();
+      var kd_dati2 = $("#kd_dati2").val();
+      var kd_kecamatan = $("#kd_kecamatan").val();
+      var kd_kelurahan = $("#kd_kelurahan").val();
+
+      if (kd_kecamatan.length==3 && kd_kelurahan.length==3 ) {
+        if (isNaN($("#kd_kecamatan").val()) || isNaN($("#kd_kelurahan").val()))  {
+            alert('Isian Kode Harus Numeric');
+            return false;
+        }
+        
+        if ($("#form_visible").val()=='0') {
+          $.ajax({
+              url: '/pbb/ref/kelurahan/c/' + kd_kecamatan+kd_kelurahan,
+              success: function (json) {
+                  data = JSON.parse(json);
+
+                  if (data['found'] == 1) {
+                      var nopmsg = 'Kode kelurahan sudah digunakan, Edit?';
+                      if (confirm(nopmsg) == false) {
+                         return false;
+                      } else {
+                        set_value(data);
+                        $("#form_visible").val('1');
+                        readonly();
+                      };
+                  }else{
+                      var nopmsg = 'Dta tidak ada, tambah?';
+                      if (confirm(nopmsg) == false) {
+                         return false;
+                      } else {
+                        $("#form_visible").val('1');
+                        readonly();
+                      };
+                  };
+              },
+              error: function (xhr, desc, er) {
+                  alert(er);
+              }
+          });
+        }
+      }
+    }
+  });
+    
+ 
+});
+</script>          
+<!--script src="${request.static_url('sipkd:static/js/pbb/ref_kelurahan.js')}" ></script-->
+<div class="content">
+
+  <div class="container-fluid">
+    <form class="form-horizontal" action='/pbb/ref/kelurahan/1' method='POST'>
+    <input id="form_visible" name="form_visible" type="hidden" value="${datas.form_visible}">
+    <div class="control-group">    
+      <label class="control-label">Kode</label> 
+      <div class="controls">
+        <input class="input-mini2" id="kd_propinsi" name="kd_propinsi" type="text" value="${datas.kd_propinsi}" readonly>
+        <input class="input-mini2" id="kd_dati2" name="kd_dati2" type="text" value="${datas.kd_dati2}" readonly>
+        <input class="input-mini3" id="kd_kecamatan" name="kd_kecamatan" value="${datas.kd_kecamatan}" maxlength="3" type="text" >
+        <input class="input-mini3" id="kd_kelurahan" name="kd_kelurahan" value="${datas.kd_kelurahan}" maxlength="3" type="text" >
+      </div>
+    </div>
+
+    <div class="control-group">    
+      <label class="control-label">Sektor</label> 
+      <div class="controls">
+        <input class="input-mini2" id="kd_sektor" name="kd_sektor" type="text" maxlength="2" value="${datas.kd_sektor}">
+      </div>
+    </div>
+
+    <div class="control-group">    
+      <label class="control-label">Nama</label> 
+      <div class="controls">  
+        <input class="input-large" id="nm_kelurahan" name="nm_kelurahan" type="text" maxlength="30" value="${datas.nm_kelurahan}">
+      </div>
+    </div>
+    
+    <div class="control-group">    
+      <label class="control-label">Nomor</label> 
+      <div class="controls">
+        <input class="input-mini5" id="no_kelurahan" name="no_kelurahan" type="text" value="${datas.no_kelurahan}">
+      </div>
+    </div>
+    <div class="control-group">    
+      <label class="control-label">Kode Pos</label> 
+      <div class="controls">
+        <input class="input-mini5" id="kd_pos_kelurahan" name="kd_pos_kelurahan" type="text" maxlength="5" value="${datas.kd_pos_kelurahan}">
+      </div>
+    </div>
+    <input type="submit" class="btn btn-success" id="btn_save" name="btn_save" value="Proses"/>
+    <input type="reset" class="btn btn-warning" id="btn_reset" name="btn_reset" value="Batal"/>
+    </form>
+  </div>
+</div>         
+              
+ 
+        </div>
+      </div>
+    </div>
+</div>
