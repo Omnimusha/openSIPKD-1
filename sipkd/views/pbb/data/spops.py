@@ -114,7 +114,7 @@ class osSpop(object):
         return datas
         
 # frm action
-    @view_config(route_name='pbbspop',
+    @view_config(route_name='pbb_spop',
                  renderer='../../../templates/pbb/spop.pt')
     def pbbspop(self):
         session = self.request.session
@@ -193,20 +193,20 @@ class osSpop(object):
                     datas=datas,
                     url=url)
 #frm keypress                    
-    @view_config(route_name='pbbspopc1',
+    @view_config(route_name='pbb_spop_c1',
                  renderer='json')
     def pbbspopc1(self):
         datas=self.get_row()
         return json.dumps(datas, default=osPbb.default)
 
 # button validate        
-    @view_config(route_name='pbbspopc2',
+    @view_config(route_name='pbb_spop_c2',
                  renderer='json')
     def pbbspopc2(self):
         datas=self.get_row()
         return json.dumps(datas, default=osPbb.default)
 # cari wp
-    @view_config(route_name='pbbdsp',
+    @view_config(route_name='pbb_dsp',
                  renderer='json')
     def pbbdsp(self): 
         session = self.request.session
@@ -221,7 +221,8 @@ class osSpop(object):
             datas['found'] = 1
         else:
             datas['found'] = 0
-        return json.dumps(datas, default=osPbb.default)
+        return json.dumps(datas, 
+                          default = osPbb.default)
         
 
         

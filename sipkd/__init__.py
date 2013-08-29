@@ -30,7 +30,7 @@ def main(global_config, **settings):
     config.add_route('login', '/login')
     config.add_route('logout', '/logout')
     config.add_route('admin', '/admin')
-    config.add_route('pbb', '/pbb')
+    
     config.add_route('rka', '/rka')
     config.add_route('spp', '/spp')
     config.add_route('spm', '/spm')
@@ -40,16 +40,17 @@ def main(global_config, **settings):
     config.add_route('admin_apps',  '/admin/apps')
     config.add_route('admin_apps_grid', '/admin/apps/grid')
     
-    config.add_route('pbbpos', '/pbbpos')
-    config.add_route('pbbm', '/pbbm')
+    config.add_route('pbb_pos', '/pbbpos')
+    config.add_route('pbb_m', '/pbbm')
     
-    config.add_route('pbbspop', '/pbb/spop')
-    config.add_route('pbbspopc1', '/pbb/spop/c1/{t}/{f}')
-    config.add_route('pbbspopc2', '/pbb/spop/c2/{t}/{f}/{n1}/{n2}/{n3}')
-    config.add_route('pbbdsp', '/pbb/dsp/{kode}')
+    config.add_route('pbb', '/pbb')
+    config.add_route('pbb_spop', '/pbb/spop')
+    config.add_route('pbb_spop_c1', '/pbb/spop/c1/{t}/{f}')
+    config.add_route('pbb_spop_c2', '/pbb/spop/c2/{t}/{f}/{n1}/{n2}/{n3}')
+    config.add_route('pbb_dsp', '/pbb/dsp/{kode}')
     
-    config.add_route('pbblspop', '/pbb/lspop')
-    config.add_route('pbblspopc1', '/pbb/lspop/c/{t}/{f}/{n1}')
+    config.add_route('pbb_lspop', '/pbb/lspop')
+    config.add_route('pbb_lspop_c1', '/pbb/lspop/c/{t}/{f}/{n1}')
     
     config.add_route('pbb_ref_kelurahan', '/pbb/ref/kelurahan/{kode}')
     config.add_route('pbb_ref_kelurahan_c', '/pbb/ref/kelurahan/c/{kode}')

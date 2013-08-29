@@ -223,7 +223,7 @@ class osLSpop(object):
         return datas
         
 # frm action
-    @view_config(route_name='pbblspop',
+    @view_config(route_name='pbb_lspop',
                  renderer='../../../templates/pbb/lspop.pt')
     def pbblspop(self):
         session = self.request.session
@@ -258,7 +258,7 @@ class osLSpop(object):
         return dict(datas=datas,
                     url=url)
 #frm keypress                    
-    @view_config(route_name='pbblspopc1',
+    @view_config(route_name='pbb_lspop_c1',
                  renderer='json')
     def pbblspopc1(self):
         datas=self.get_row()
