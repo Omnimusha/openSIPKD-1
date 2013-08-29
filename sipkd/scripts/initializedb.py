@@ -22,6 +22,9 @@ from ..models.users import (
     )
 from ..models.apps import  (osApps, osModules)
 
+from ..models.pbb.data.dat_objek_pajak import osDOP
+from ..models.pbb.data.dat_subjek_pajak import osDSP
+
 def usage(argv):
     cmd = os.path.basename(argv[0])
     print('usage: %s <config_uri>\n'
