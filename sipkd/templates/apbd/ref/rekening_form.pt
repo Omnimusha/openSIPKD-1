@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<div metal:use-macro="view.nav">
+
+    <div metal:fill-slot="content">
+      <div class="content">
+          <div class="container-fluid">
+          <ul class="nav nav-tabs">
+            <li class="active">
+              <a href="#"><strong>Rekening</strong></a>
+            </li>
+          </ul>
+<script>          
+$(document).ready(function () {
+  function set_value(data){
+      $("#kd_kecamatan").val(data['kd_kecamatan']);
+      $("#kd_kelurahan").val(data['kd_kelurahan']);
+      $("#kd_sektor").val(data['kd_sektor']);
+      $("#nm_kelurahan").val(data['nm_kelurahan']);
+      $("#no_kelurahan").val(data['no_kelurahan']);
+      $("#kd_pos_kelurahan").val(data['kd_pos_kelurahan']);
+      
+  }
+  
+  function readonly(){
+    if ($("#form_visible").val()==0){
+        $("#btn_save").attr('disabled', 'disabled');
+
+        $("#kode").removeAttr('readonly');
+         $("#nama").attr('readonly','readonly');
+         $("#level_id").attr('readonly','readonly');
+         $("#defsign").attr('readonly','readonly');
+         $("#header_id").attr('readonly','readonly');
+         $("#locked").attr('readonly','readonly');
+
+
+      }else{
+        $("#btn_save").removeAttr('disabled');
+         $("#kode").attr('readonly','readonly');
+        $("#nama").removeAttr('readonly');
+        $("#level_id").removeAttr('readonly');
+        $("#defsign").removeAttr('readonly');
+        $("#header_id").removeAttr('readonly');
+        $("#locked").removeAttr('readonly');
+
+    }
+  }
+  readonly();
+
+  $("#kode").keypress(function () {
+    if ($("#form_visible").val()==0){
+
+      var kode = $("#kode").val();
+
+      if (kd_kecamatan.length==3 && kd_kelurahan.length==3 ) {
+        if ($("#form_visible").val()=='0') {
+          $.ajax({
+              url: '${url}apbd/ref1/cek/' + kode,
+              success: function (json) {
+                  data = JSON.parse(json);
+
+                  if (data['found'] == 1) {
+                      var msg = 'Kode rekening sudah digunakan, Edit?';
+                      if (confirm(msg) == false) {
+                         return false;
+                      } else {
+                        set_value(data);
+                        $("#form_visible").val('1');
+                        readonly();
+                      };
+                  }else{
+                      var msg = 'Data tidak ada, tambah?';
+                      if (confirm(msg) == false) {
+                         return false;
+                      } else {
+                        $("#form_visible").val('1');
+                        readonly();
+                      };
+                  };
+              },
+              error: function (xhr, desc, er) {
+                  alert(er);
+              }
+          });
+        }
+      }
+    }
+  });
+    
+ 
+});
+</script>          
+<!--script src="${request.static_url('sipkd:static/js/pbb/ref_kelurahan.js')}" ></script-->
+<div class="content">
+
+  <div class="container-fluid">
+    <form class="form-horizontal" action='/pbb/ref/kelurahan/1' method='POST'>
+      <input id="form_visible" name="form_visible" type="hidden" value="${datas.form_visible}">
+      <input id="id" name="id" value="${datas.id}" type="hidden" >        
+      
+      <div class="control-group">    
+        <label class="control-label">Kode</label> 
+        <div class="controls">
+          <input class="input-midle" id="kode" name="kode" value="${datas.kode}" maxlength="15" type="text" >
+        </div>
+      </div>
+
+      <div class="control-group">    
+        <label class="control-label">Uraian</label> 
+        <div class="controls">
+          <input class="input-large" id="nama" name="nama" value="${datas.nama}" maxlength="150" type="text" >
+        </div>
+      </div>
+
+      <div class="control-group">    
+        <label class="control-label">Level</label> 
+        <div class="controls">
+          <input class="input-mini3" id="level_id" name="level_id" value="${datas.level_id}" type="text" >
+        </div>
+      </div>
+
+      <div class="control-group">    
+        <label class="control-label">Default</label> 
+        <div class="controls">
+          <input class="input-mini3" id="defsign" name="defsign" value="${datas.defsign}" type="text" >
+        </div>
+      </div>
+
+      <div class="control-group">    
+        <label class="control-label">Header</label> 
+        <div class="controls">
+          <input class="input-mini3" id="header_id" name="header_id" value="${datas.header_id}" type="text" >
+        </div>
+      </div>
+
+      <div class="control-group">    
+        <label class="control-label">Kunci/Disable</label> 
+        <div class="controls">
+          <input id="locked" name="locked" value="${datas.locked}" type="checkbox" >
+        </div>
+      </div>
+
+      <input type="submit" class="btn btn-success" id="btn_save" name="btn_save" value="Simpan"/>
+      <input type="reset" class="btn btn-warning" id="btn_reset" name="btn_reset" value="Batal"/>
+      <input type="reset" class="btn btn-warning" id="btn_reset" name="btn_reset" value="Kembali"/>
+    
+    </form>
+  </div>
+</div>         
+              
+ 
+        </div>
+      </div>
+    </div>
+</div>

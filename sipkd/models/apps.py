@@ -1,3 +1,4 @@
+import sys
 from model import * 
 
 
@@ -19,7 +20,7 @@ class osApps(Base):
     
     @classmethod
     def get_rows(cls):
-        return DBSession.query(cls).all()
+        return DBSession.query(cls).order_by('kode').all()
         
     @classmethod
     def get_by_id(cls,id):
@@ -32,6 +33,21 @@ class osApps(Base):
     @classmethod
     def get_by_kode(cls,kode):
             return DBSession.query(cls).filter(cls.kode==kode).first()        
+
+    @classmethod
+    def edit(cls, data):
+        DBSession.merge(cls(data))
+        
+    @classmethod
+    def edit_locked(cls, data):
+        a = DBSession.query(cls).filter_by(id=data['id']).first()
+        a.locked = data['value']
+        try: 
+            DBSession.merge(a)
+            return True
+        except:
+            print sys.exc_info()
+            return False
         
 class osModules(Base):
     __tablename__ = 'modules'

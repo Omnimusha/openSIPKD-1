@@ -11,6 +11,11 @@ from ..models.model import (
 
 from sipkd.models.apps import osApps
 
+def json_format(o):
+    if type(o) is date:
+        return o.strftime("%d-%m-%Y")
+        
+        
 def sipkd_init(request,context):
     datas={}
     datas['title']="OpenSIPKD"

@@ -18,13 +18,12 @@ from deform import Form
 from deform import ValidationFailure
 
 from sipkd.models.model import *
-from sipkd.models.pbb.pbb import osPbb
-from sipkd.models.pbb.ref.kelurahan import osKelurahan
+from sipkd.models.apbd.ref.rekening import osRefRekening
 
 from sipkd.views.views import *
 
 
-class osfKelurahanValid(colander.MappingSchema):
+class osfRekeningValid(colander.MappingSchema):
     kd_kecamatan = colander.SchemaNode(colander.String())
     kd_kelurahan = colander.SchemaNode(colander.String())
     nm_kelurahan = colander.SchemaNode(colander.String())
@@ -34,7 +33,7 @@ class osfKelurahanValid(colander.MappingSchema):
                    colander.Integer(),
                     missing = None,)    
     
-class osfKelurahan(object):
+class osfRekening(object):
     def __init__(self, context, request):
         self.context = context
         self.request = request
@@ -49,29 +48,66 @@ class osfKelurahan(object):
                 
     @classmethod
     def BlankRow(cls):
-            return { 'form_visible': 0,'kd_propinsi' :gkd_propinsi, 'kd_dati2' : gkd_dati2, 
-                  'kd_kecamatan':'', 'kd_kelurahan':'',
-                  'kd_sektor':'', 'nm_kelurahan':'',
-                  'no_kelurahan':'', 'kd_pos_kelurahan':'',}
-        
-# frm action
-    @view_config(route_name='pbb_ref_kelurahan',
-                 renderer='../../../templates/pbb/ref/kelurahan.pt')
-    def pbb_ref_kelurahan(self):
-        session = self.request.session
+            return {'form_visible':0,
+                    'id' : '',
+                    'kode' : '',
+                    'nama' : '',
+                    'level_id' : '',
+                    'defsign' : '',
+                    'header_id' : '',
+                    'locked' : '',
+                  }
+#init
+    @view_config(route_name='apbd_ref1',
+                 renderer='../../../templates/apbd/ref/rekening.pt')
+    def apbd_ref1(self):
         request = self.request
+        session = request.session
         resource = None
         url=request.resource_url(resource)
-        datas = sipkd_init(self.request, self.context)
+        datas=sipkd_init(self.request, self.context)
+
+        if session['logged']<>1:
+           return HTTPFound(location='/logout') 
+  
+        return dict(datas=datas, url=url)
+#grid
+    @view_config(route_name='apbd_ref1_grid', renderer='json')
+    def apbd_ref1_grid(self):
+        resource = None
+               
+        grids={"aaData":[]}
         
+        for opt in opts: 
+            checked = opt.locked==1 and "checked" or ""
+            grids['aaData'].append([opt.id, opt.kode, opt.nama, opt.defsign,
+            '<input type="checkbox" onchange="update_stat(%d,this.checked);" name="disabled" disabled %s>' % (opt.id,checked)
+            
+            ])
+        return grids
+        
+# form
+    @view_config(route_name='apbd_ref1_form',
+                 renderer='../../../templates/apbd/ref/rekening_form.pt')
+    def apbd_ref1_form(self):
+        request = self.request
+        session = request.session
+        resource = None
+        url=request.resource_url(resource)
+        datas=sipkd_init(self.request, self.context)
         datas.update(self.BlankRow())
 
-        fields = self.request.matchdict
-        if len(fields['kode'])>5:
-            kode=osKelurahan.kode_split(fields['kode']);
-            datas.update(osKelurahan.row2dict(osKelurahan.get_by_kode(kode)))
+        if session['logged']<>1:
+           return HTTPFound(location='/logout') 
         
-        schema = osfKelurahanValid()
+        fields = self.request.matchdict
+        datas.update(self.BlankRow())
+        if 'id' in fields:
+            datas['form_visible'] = 1
+            datas['id']=fields['id']
+            datas.update(osRefRekening.row2dict(osRefRekening.get_by_id(datas)))
+
+        schema = osfRekeningValid()
         myform = Form(schema, buttons=('submit',))
         if 'btn_save' in self.request.POST:
             controls = self.request.POST.items()
@@ -88,18 +124,18 @@ class osfKelurahan(object):
             data2=self.BlankRow()
             datas.update(data2)
             #return dict(datas=datas)
-        return dict(datas=datas)
+        return dict(datas=datas, url=url)
 
-#    config.add_route('pbb_ref_kelurahanc', '/pbb/ref/kelurahan/c/{kode}')
-    @view_config(route_name='pbb_ref_kelurahan_c',
+#cek kode
+    @view_config(route_name='apbd_ref1_cek',
                  renderer='json')
-    def pbb_ref_kelurahan_c(self):
+    def apbd_ref1_cek(self):
         fields = self.request.matchdict
-        kode = osKelurahan.kode_split(fields['kode'])
         datas={}
         datas['found'] = 0
+        kode = fields['kode']
         if kode:
-            d=osKelurahan.row2dict(osKelurahan.get_by_kode(kode))
+            d=osKelurahan.row2dict(osRefRekening.get_by_kode(kode))
             if d: 
                 datas['found'] = 1
                 datas.update(d)

@@ -17,7 +17,8 @@ $(document).ready(function() {
 		],
 		"aoColumns": [
 			null,
-			null,
+			{"sWidth": "10%"},
+      null,
 			{ "sWidth": "20%" },
 			{ "sWidth": "6%" ,"sClass": "center"}
 		],
@@ -40,7 +41,7 @@ $(document).ready(function() {
 		"bProcessing": false,
         "bFilter": true,
         "bAutoWidth": false,
-		"sAjaxSource": '${url}admin/apps/grid'
+		"sAjaxSource": '${url}apbd/ref1/grid'
 	});
 
 	var tb_array = [
@@ -55,12 +56,12 @@ $(document).ready(function() {
 	$("div.toolbar").html(tb);
 	
 	$('#btn_tambah').click(function() {
-		window.location = '${url}admin/apps/add/';
+		window.location = '${url}apbd/ref1/form/0';
 	});
 
 	$('#btn_edit').click(function() {
 		if(mID) {
-			window.location = '${url}admin/apps/edit/'+mID;
+			window.location = '${url}apbd/ref1/form/'+mID;
 		}else{
 			alert('Silahkan pilih data yang akan diedit');
 		}
@@ -70,7 +71,7 @@ $(document).ready(function() {
 		if(mID) {
 			var hapus = confirm('Hapus data ini?');
 			if(hapus==true) {
-				window.location = '${url}admin/apps/delete/'+mID;
+				window.location = '${url}apbd/ref1/form/'+mID+'?del=1';
 			};
 		}else{
 			alert('Silahkan pilih data yang akan dihapus');
@@ -81,7 +82,7 @@ $(document).ready(function() {
 function update_stat(id, a) {
 	var val = Number(a);
 	$.ajax({
-	  url: '${url}admin/apps/update_stat/' + id + '/' + val,
+	  url: '${url}apbd/ref1/update_stat/' + id + '/' + val,
 	  success: function(data) {
 		$('#app_id').html(data);
 	  }
@@ -94,7 +95,7 @@ function update_stat(id, a) {
           <div class="container-fluid">
           <ul class="nav nav-tabs">
             <li class="active">
-              <a href="#"><strong>APLIKASI</strong></a>
+              <a href="#"><strong>Rekening</strong></a>
             </li>
           </ul>
           
@@ -104,14 +105,16 @@ function update_stat(id, a) {
               <table class="table" id="table1" name="table1" border="1">
                 <thead>
                   <tr>
-                    <th>Index</th>
-                    <th>Nama Aplikasi</th>
-                    <th>Direktori</th>
+                    <th>id</th>
+                    <th>Kode</th>
+                    <th>Uraian</th>
+                    <th>Default</th>
                     <th>Disabled</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
+                  <td>a</td>
                   <td>a</td>
                   <td>a</td>
                   <td>a</td>

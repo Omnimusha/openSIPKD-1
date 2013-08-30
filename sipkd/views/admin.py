@@ -11,7 +11,9 @@ from pyramid.security import has_permission
 from sqlalchemy.exc import DBAPIError
 import json
 from sipkd.views.views import sipkd_init
-
+from sipkd.views.views import json_format
+from sipkd.models.apps import osApps
+        
 class AdminViews(object):
     def __init__(self, context, request):
         self.context = context
@@ -69,29 +71,28 @@ class AdminViews(object):
 
     @view_config(route_name='admin_apps_grid', renderer='json')
     def appsgrid(self):
-        from ..models.apps import osApps
         resource = None
         opts = osApps.get_rows()
         
-        a={"aaData":[]}
-        for opt in opts:
-            a['aaData']=[opt.id,opt.nama]
-            print a
-        
-        #arow = json.dumps(opts, indent=4)
-        #print arow
-        
-        #for opt in opts:
+        grids={"aaData":[]}
+        for opt in opts: 
+            checked = opt.locked==1 and "checked" or ""
+            grids['aaData'].append([opt.id, opt.nama, opt.kode,
+            '<input type="checkbox" onchange="update_stat(%d,this.checked);" name="disabled" %s>' % (opt.id,checked)
             
-        a= {"aaData":[
-            ["1","PBB","pbb","<input type=\"checkbox\" onchange=\"update_stat(1,this.checked);\" name=\"disabled\" checked>"], 
-            ["2","BPHTB","bphtb","<input type=\"checkbox\" onchange=\"update_stat(2,this.checked);\" name=\"disabled\" >"], \
-            ["3","POSPBB","pospbb","<input type=\"checkbox\" onchange=\"update_stat(3,this.checked);\" name=\"disabled\" >"], \
-            ["4","MONITORING PBB","pbbm","<input type=\"checkbox\" onchange=\"update_stat(4,this.checked);\" name=\"disabled\" >"], \
-            ["5","ADMIN","admin","<input type=\"checkbox\" onchange=\"update_stat(5,this.checked);\" name=\"disabled\" checked>"], \
-            ["6","PBB DATA","pbbdata","<input type=\"checkbox\" onchange=\"update_stat(6,this.checked);\" name=\"disabled\" >"] \
-            ]}
+            ])
+        return grids
+        #json.dumps(grids, 
+        #                  default = json_format)
         
-        return a
-                    
+
+    @view_config(route_name='admin_apps_update_stat', renderer='json')
+    def appupdate_stat(self):
+        request = self.request
+        fields = request.matchdict
+        
+        if osApps.edit_locked(fields)==True:
+            return {'success':1}
+        else:
+            return {'success':0}
 

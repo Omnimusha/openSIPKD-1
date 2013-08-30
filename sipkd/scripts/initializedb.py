@@ -44,9 +44,9 @@ def main(argv=sys.argv):
     with transaction.manager:
         """model = osSipkdModel(nama='one', kode='1')
         DBSession.add(model)
-        
+        """
         model = osUsers(kode='sa', passwd='sa',  nama='sa', locked=0)
-        DBSession.add(model)
+        DBSession.merge(model)
        
         model = osApps(kode='pbbm', nama='Monitoring PBB', locked=0)
         DBSession.add(model)
@@ -54,10 +54,10 @@ def main(argv=sys.argv):
         model = osApps(kode='admin', nama='ADMIN', locked=0)
         DBSession.add(model)
         
-        model = osApps(kode='pbbd', nama='Pendataan PBB', locked=0)
+        model = osApps(kode='pbb', nama='Pendataan PBB', locked=0)
         DBSession.add(model)
         
-        model = osModules(kode='data', nama='Pendataan', locked=0, parent='pbbd')
-        DBSession.add(model)
-        """
+        """model = osModules(kode='data', nama='Pendataan', locked=0, parent='pbbd')
+        DBSession.add(model)"""
+        
         
